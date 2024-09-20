@@ -1,0 +1,13 @@
+# testar objetos do login e register - ok
+
+
+# CRUD de produtos 
+
+ -adcionar produtos
+ 
+
+
+
+
+ - como vai funcionar:
+  as pessoas que trabalham na migrate vao postar o serviço delas como produto e vao colocar alem do preço o estoque que seria o limite de clientes que consegue administrar, quando acabar o serviço vai ficar como inidisponivel, serviços inidisponiveis sao ofuscados da tela de cliente

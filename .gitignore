@@ -1,0 +1,8 @@
+node_modules
+.env
+./src/mock
+*.spec.ts
+*.mock.ts
+
+# Keep environment variables out of version control
+.early.coverage
