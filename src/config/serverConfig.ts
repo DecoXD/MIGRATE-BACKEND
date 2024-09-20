@@ -17,7 +17,7 @@ export class ServerSetup {
             extended:true
         }))
         this.server.use('/',AuthRouter)
-        this.server.use('/products',ProductRouter)
+        this.server.use('/p',ProductRouter)
         this.server.listen(3000,() => {
             console.log('server are ready')
         })

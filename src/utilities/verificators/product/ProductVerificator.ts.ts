@@ -19,7 +19,7 @@ export class ProductVerificator implements IProductVerificatorProtocol{
 
 
 
-  async verifyUserPermissions(userId:string){
+  async verifyUserPermissions(userId:string):Promise<boolean>{
     try {
       const user = await this.userService.getUserById(userId)
       const adminCode = process.env.APP_ADMIN_CODE
@@ -32,7 +32,7 @@ export class ProductVerificator implements IProductVerificatorProtocol{
       if(error instanceof HttpException){
         throw new HttpException(error.message,error.statusCode)
       } 
-      throw new HttpException('System Error',501)
+      throw new Error('System Error')
     }
   }
 
@@ -43,23 +43,35 @@ export class ProductVerificator implements IProductVerificatorProtocol{
       const fieldsAreFilled = allFieldsAreFilled(product)
       
       if(!fieldsAreFilled) throw new HttpException('Por favor Preencha todos os campos',404)
-      //pegar o id do usuário pelo token e verificar se ele tem permissão de ADMIN
+      //pegar o id do usuário pelo token 
       const token = await this.tokenManipulator.getToken(req)
       const {userId} = await this.tokenManipulator.getUserByToken(token)
+
       if(!userId) throw new HttpException('você nao possui permissão para realizar essa operação',403)
-      this.verifyUserPermissions(userId)
+      // verificar se ele tem permissão de ADMIN
+      await this.verifyUserPermissions(userId)
       return userId
     } catch (error) {
       if(error instanceof HttpException){
         throw new HttpException(error.message,error.statusCode)
       } 
-      throw new HttpException('System Error',501)
+      throw new Error('System Error')
     }
 
   }
 
-  async deleteProductVerificator(product: ProductAttributes): Promise<void> {
+  async deleteProductVerificator(req:Request,product: ProductAttributes): Promise<void> {
     //verificar permissão do usuário 
+    try {
+      const token = await this.tokenManipulator.getToken(req)
+      const {userId} = await this.tokenManipulator.getUserByToken(token)
+      await this.verifyUserPermissions(userId)
+    } catch (error) {
+      if(error instanceof HttpException){
+        throw new HttpException(error.message,error.statusCode)
+      } 
+      throw new Error('System Error')
+    }
   }
 
   async updateProductVerificator(product: ProductAttributes): Promise<void> {

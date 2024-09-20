@@ -43,6 +43,7 @@ export class TokenManipulator implements ITokenManipulator{
 
   async getUserByToken(token:string){
     try { 
+
       const decodedToken = jwt.decode(token)
      
       return decodedToken
@@ -52,5 +53,6 @@ export class TokenManipulator implements ITokenManipulator{
     }
   }
 
+ 
   
 }

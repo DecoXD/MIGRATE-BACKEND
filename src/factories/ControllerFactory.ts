@@ -13,16 +13,17 @@ export class ControllerFactory{
     const userVerificator = new CreateUserVerificator(userService)
     const tokenManipulator = new TokenManipulator()
     const userController = new UserController(userService,userVerificator,tokenManipulator)
+    
     return userController
   }
 
   static MakeProductController():IProductControllerProtocol{
     const service = new ProductRepository()
-  const userService = new UserRepository()
-  const tokenManipulator =  new TokenManipulator()
-  const verificator = new ProductVerificator(service,userService,tokenManipulator)
-  
-  const controller = new ProductController(service,verificator)
+    const userService = new UserRepository()
+    const tokenManipulator =  new TokenManipulator()
+    const verificator = new ProductVerificator(service,userService,tokenManipulator)
+    const controller = new ProductController(service,verificator)
+
   return controller
   }
 

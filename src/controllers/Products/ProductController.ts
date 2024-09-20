@@ -24,10 +24,10 @@ export class ProductController implements IProductControllerProtocol{
   }
 
   async getProductById(req: Request, res: Response): Promise<Response> {
-    const {id} = req.body
+    const {id} = req.params
     try {
       const product = await this.repository.getProductById(id) 
-      res.status(201).json({product})
+      return res.status(201).json({product})
     } catch (error) {
       if(error instanceof HttpException){
        return res.status(error.statusCode).json({message:error.message})
@@ -40,7 +40,7 @@ export class ProductController implements IProductControllerProtocol{
   async addProduct(req: Request, res: Response): Promise<Response> {
    
     const {name,price,discription,stock,category,discount} = req.body;
-    //
+    
     const productData = {
       name,
       price,
@@ -60,7 +60,11 @@ export class ProductController implements IProductControllerProtocol{
       return res.status(200).json({message:'produto cadastrado com sucesso !',product})
       
     } catch (error) {
-      return res.status(500).json({message:error.message})
+      if(error instanceof HttpException){
+        return res.status(error.statusCode).json({message:error.message})
+      } else{
+        return res.status(500).json({message:'something wrong has been ocurred !'})
+      }
     }
 
   
@@ -69,6 +73,7 @@ export class ProductController implements IProductControllerProtocol{
   async deleteProduct(req: Request, res: Response): Promise<Response> {
     try {
       const {id} = req.body
+      await this.verificator.deleteProductVerificator(req,id)
       await this.repository.deleteProduct(id)
       return res.status(201).json({message:'produto deletado com sucesso'})
     } catch (error) {
@@ -77,13 +82,21 @@ export class ProductController implements IProductControllerProtocol{
   }
 
   async updateProductData(req: Request, res: Response): Promise<Response> {
-    const data = req.body
-    const {id} = req.params
+    const {id,name,discription,discount,stock,category,price} = req.body
+    const data = {
+      name,
+      discount,
+      discription,
+      stock,
+      category,
+      price
+    }
     try {
+      await this.verificator.addProductVerificator(req,data)
       await this.repository.updateProduct(id,data)
       return res.status(201).json({message:'item atualizado com sucesso'})
     } catch (error) {
-      return res.status(500).json(error.message)
+      return res.status(500).json({message:error.message})
       
     }
   }
