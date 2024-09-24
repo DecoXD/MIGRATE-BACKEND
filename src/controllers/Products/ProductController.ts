@@ -34,17 +34,17 @@ export class ProductController implements IProductControllerProtocol{
       }
       return res.status(501).json({message:'systemError'})
     }
-    return 
+  
   }
 
   async addProduct(req: Request, res: Response): Promise<Response> {
    
-    const {name,price,discription,stock,category,discount} = req.body;
+    const {name,price,description,stock,category,discount} = req.body;
     
     const productData = {
       name,
       price,
-      discription,
+      description,
       stock,
       discount,
       category
@@ -82,11 +82,11 @@ export class ProductController implements IProductControllerProtocol{
   }
 
   async updateProductData(req: Request, res: Response): Promise<Response> {
-    const {id,name,discription,discount,stock,category,price} = req.body
+    const {id,name,description,discount,stock,category,price} = req.body
     const data = {
       name,
       discount,
-      discription,
+      description,
       stock,
       category,
       price

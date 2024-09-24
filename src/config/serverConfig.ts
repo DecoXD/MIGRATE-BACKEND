@@ -1,6 +1,6 @@
 import express, { Express} from "express";
 import AuthRouter from "../routes/AuthRoute";
-import { ProductRouter } from "../routes/ProductRoute";
+import { ProductRouter } from "../routes/admin/ProductRoute.admin";
 
 export class ServerSetup {
     private server:Express 

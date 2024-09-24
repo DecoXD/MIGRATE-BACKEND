@@ -1,9 +1,9 @@
 export type ProductAttributes = {
   name:string;
-  discription:string;
+  description:string;
   price:number;
   discount:number;
   stock?:number;
   category:string;
-  userId?:string  
+
 }

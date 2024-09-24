@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { ControllerFactory } from "../factories/ControllerFactory";
-import { ErrorHandler } from "../exceptions/ErrorHandler";
+import { ControllerFactory } from "../../factories/ControllerFactory";
+import { ErrorHandler } from "../../exceptions/ErrorHandler";
 
 const ProductRouter = Router()
 
