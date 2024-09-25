@@ -41,16 +41,22 @@ export class TokenManipulator implements ITokenManipulator{
     }
   }
 
-  async getUserByToken(token:string){
+  async getUserByToken(token:string):Promise<string>{
     try { 
-
-      const decodedToken = jwt.decode(token)
+      const splitedToken = this.splitToken(token)
+      const decodedToken = jwt.decode(splitedToken,{json:true})
+      if(!decodedToken) throw new HttpException('invalid token',501)
      
-      return decodedToken
+      return decodedToken.userId
     } catch (error) {
       console.log('erro no getuserbytoken')
       
     }
+  }
+
+
+  splitToken(token:String){
+    return token.split(' ')[1]
   }
 
  

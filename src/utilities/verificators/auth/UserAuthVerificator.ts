@@ -4,6 +4,8 @@ import { ICreateUserVerificator } from "./IUserAuthVerificator";
 import { IUserRepositoryProtocol } from "../../../repositories/auth/IUserRepository";
 import bcrypt from 'bcrypt';
 import { allFieldsAreFilled } from "../../checkFields";
+import { ITokenManipulator } from "../../interfaces";
+import { Request } from "express";
 
 
 export class CreateUserVerificator implements ICreateUserVerificator{
@@ -55,8 +57,6 @@ export class CreateUserVerificator implements ICreateUserVerificator{
         }
     }
   }
-
-
 
   async startRegisterVerification(user:IUserAttributes): Promise<void> {
     try {

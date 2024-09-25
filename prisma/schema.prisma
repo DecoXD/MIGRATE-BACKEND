@@ -12,7 +12,7 @@ model User {
   name         String
   email        String         @unique
   password        String
-  role         UserRole // Enum para diferenciar Usuário e Admin
+  role         UserRole     @default(USER)
   created_at  DateTime       @default(now())
   Carts    Cart[]
   Orders      Order[]

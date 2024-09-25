@@ -3,7 +3,6 @@ import { HttpException } from "../../../exceptions/HttpException";
 import { ProductAttributes } from "../../../interfaces/product";
 import { IUserRepositoryProtocol } from "../../../repositories/auth/IUserRepository";
 import { IProductRepositoryProtocol } from "../../../repositories/product/IProductRepository";
-import { TokenManipulator } from "../../Token";
 import { ITokenManipulator } from "../../interfaces";
 import { IProductVerificatorProtocol } from "./IProductVerificatorProtocol";
 import { allFieldsAreFilled } from "../../checkFields";

@@ -1,14 +1,15 @@
 import { Router } from "express";
 import { ControllerFactory } from "../../factories/ControllerFactory";
-import { ErrorHandler } from "../../exceptions/ErrorHandler";
+
+import { VerifyUserPermissions } from "../../middlewares/VerifyUserPermissions";
 
 const ProductRouter = Router()
 
 const controller = ControllerFactory.MakeProductController()
-
-ProductRouter.post('/create',controller.addProduct.bind(controller))
-ProductRouter.put('/update',controller.updateProductData.bind(controller))
-ProductRouter.delete('/delete',controller.deleteProduct.bind(controller))
-ProductRouter.get('/',controller.getAllProducts.bind(controller))
+// only admin can be access this methods 
+ProductRouter.post('/create',VerifyUserPermissions,controller.addProduct.bind(controller))
+ProductRouter.put('/update',VerifyUserPermissions,controller.updateProductData.bind(controller))
+ProductRouter.delete('/delete',VerifyUserPermissions,controller.deleteProduct.bind(controller))
+ProductRouter.get('/',VerifyUserPermissions,controller.getAllProducts.bind(controller))
 
 export {ProductRouter}
