@@ -16,7 +16,7 @@ export class ProductController implements IProductControllerProtocol{
   async getAllProducts(req: Request, res: Response):Promise<Response>{
     try {
       const productList = await this.repository.getAll()
-      return res.status(201).json({productList})
+      return res.status(200).json({productList})
     } catch (error) {
       res.status(500).json({message:error.message})
     }

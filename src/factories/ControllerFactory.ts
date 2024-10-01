@@ -39,4 +39,11 @@ export class ControllerFactory{
 
     return new UserCartController(repository,verificator,tokenManipulator)
   }
+  static MakeShoppingCartController():IUserCartControllerProtocol {
+    const repository = new UserCartRepository()
+    const verificator = new UserCartVerificator(repository)
+    const tokenManipulator = UtilitiesFactory.MakeTokenManipulator()
+
+    return new UserCartController(repository,verificator,tokenManipulator)
+  }
 }

@@ -2,7 +2,7 @@ import express, { Express} from "express";
 import AuthRouter from "../routes/AuthRoute";
 import { ProductAdminRouter } from "../routes/admin/ProductRoute.admin";
 import { router as UserCartRouter} from "../routes/UserCartRoutes";
-import { VerifyUserPermissions } from "../middlewares/VerifyUserPermissions";
+
 
 export class ServerSetup {
     private server:Express 
@@ -23,7 +23,7 @@ export class ServerSetup {
         this.server.use('/',AuthRouter)
         this.server.use('/cart',UserCartRouter)
 
-        this.server.use('/p/admin',VerifyUserPermissions,ProductAdminRouter)
+        this.server.use('/p',ProductAdminRouter)
         this.server.listen(3000,() => {
             console.log('server are ready')
         })

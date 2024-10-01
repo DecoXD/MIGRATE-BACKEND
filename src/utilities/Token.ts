@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken'
 import { ITokenManipulator } from './interfaces';
 import { HttpException } from '../exceptions/HttpException';
@@ -31,7 +31,7 @@ export class TokenManipulator implements ITokenManipulator{
     }
   }
 
-  async verifyToken(req:Request){
+  async verifyToken(req:Request,res:Response,next:NextFunction){
     try {
       const token = await this.getToken(req)
 

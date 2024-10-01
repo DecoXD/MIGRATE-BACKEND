@@ -2,6 +2,7 @@ import { IUserAttributes } from "../../interfaces/auth"
 
 export type IUserRepositoryProtocol = {
     registerUser(userData:IUserAttributes):Promise<IUserAttributes>;
+    
     getUserById(id:string):Promise<IUserAttributes >;
     getUserByEmail(email:string):Promise<IUserAttributes | null>;
     getAllUsers():Promise<IUserAttributes[]|null>;

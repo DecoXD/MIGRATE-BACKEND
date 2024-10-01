@@ -19,9 +19,9 @@ router.post('/create',async (req,res,next) =>{
   //get product id 
 }, ErrorHandler)
 
-// to close the cart must be authenticated
+// to close the cart must be authenticated to cancell the cart
 router.patch('/close',(req,res) =>{
-  
+ 
 })
 
 

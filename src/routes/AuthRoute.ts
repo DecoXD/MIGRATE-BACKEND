@@ -7,7 +7,7 @@ const userController = ControllerFactory.MakeUserAuthController()
 const router = Router()
 
 router.post('/createaccount',userController.createUser.bind(userController))
-router.post('/createadminaccount',verifyAdminKey,userController.createUser.bind(userController))
+router.post('/createadminaccount',verifyAdminKey,userController.createAdminAccount.bind(userController))
 router.post('/signin',userController.toAccessUser.bind(userController))
 
 

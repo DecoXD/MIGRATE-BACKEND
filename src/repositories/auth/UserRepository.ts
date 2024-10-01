@@ -15,6 +15,8 @@ export class UserRepository implements IUserRepositoryProtocol {
 
   constructor(){}
 
+
+
   async registerUser(userData: IUserAttributes) {
     try {
       const {name,email,password,role} = userData
