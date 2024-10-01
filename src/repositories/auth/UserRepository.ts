@@ -17,17 +17,16 @@ export class UserRepository implements IUserRepositoryProtocol {
 
   async registerUser(userData: IUserAttributes) {
     try {
-      const {name,email,password} = userData
+      const {name,email,password,role} = userData
      
       const salt = bcrypt.genSaltSync(12)
       const hashPassword = bcrypt.hashSync(password,salt)// refatorar 
      
-
-      
       const newUser = {
         name,
         email,
-        password:hashPassword
+        password:hashPassword,
+        role:role ? role : "USER"
       }
 
       const user = await prismaClient.user.create({

@@ -9,9 +9,13 @@
     "rootDir": "./src",
     "outDir": "./dist",
     "sourceMap": true,
+    "paths": {
+      "@interfaces/*":["./src/interfaces/*"]
+    }
     
     
     },
       "include": ["src/**/*"],
+      
       "exclude": ["**/*.spec.ts","node_modules"]
   }

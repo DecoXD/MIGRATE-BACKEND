@@ -43,13 +43,14 @@ export class ProductVerificator implements IProductVerificatorProtocol{
       
       if(!fieldsAreFilled) throw new HttpException('Por favor Preencha todos os campos',404)
       //pegar o id do usuário pelo token 
-      const token = await this.tokenManipulator.getToken(req)
-      const {userId} = await this.tokenManipulator.getUserByToken(token)
 
-      if(!userId) throw new HttpException('você nao possui permissão para realizar essa operação',403)
+      const token = await this.tokenManipulator.getToken(req)
+      
+      const id = await this.tokenManipulator.getUserByToken(token)
+
+      if(!id) throw new HttpException('você nao possui permissão para realizar essa operação',403)
       // verificar se ele tem permissão de ADMIN
-      await this.verifyUserPermissions(userId)
-      return userId
+      return id
     } catch (error) {
       if(error instanceof HttpException){
         throw new HttpException(error.message,error.statusCode)

@@ -5,7 +5,7 @@ import { IProductRepositoryProtocol } from "./IProductRepository";
 
 export class ProductRepository implements IProductRepositoryProtocol{
   
-  async deleteProduct(id: string): Promise<void> {
+  async deleteProduct(id: number): Promise<void> {
     try {
       await prismaClient.product.delete({
         where:{
@@ -48,7 +48,7 @@ export class ProductRepository implements IProductRepositoryProtocol{
     }
   }
 
-  async getProductById(productId: string): Promise<ProductAttributes> {
+  async getProductById(productId: number): Promise<ProductAttributes> {
     try {
       const product = await prismaClient.product.findUnique({
         where:{
@@ -77,7 +77,7 @@ export class ProductRepository implements IProductRepositoryProtocol{
     }
   }
 
-  async updateProduct(id: string,data:ProductAttributes): Promise<void> {
+  async updateProduct(id: number,data:ProductAttributes): Promise<void> {
     try {
       const product = await prismaClient.product.update({
         data:data,

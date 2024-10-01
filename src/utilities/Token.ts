@@ -19,7 +19,7 @@ export class TokenManipulator implements ITokenManipulator{
   async createToken(userId:string){
     try {
       const payload = {
-        userId,
+       id: userId
       }
       const token = jwt.sign(
         payload,process.env.APP_JWT_SECRET,{
@@ -34,7 +34,9 @@ export class TokenManipulator implements ITokenManipulator{
   async verifyToken(req:Request){
     try {
       const token = await this.getToken(req)
+
       const decodedToken = jwt.decode(token)
+      if(!decodedToken) throw new Error('erro no verify token')
       return true
     } catch (error) {
       console.log('erro na decodificação do token ')
@@ -44,10 +46,12 @@ export class TokenManipulator implements ITokenManipulator{
   async getUserByToken(token:string):Promise<string>{
     try { 
       const splitedToken = this.splitToken(token)
+      console.log(splitedToken,'apliter')
       const decodedToken = jwt.decode(splitedToken,{json:true})
+      console.log(decodedToken.id,'decoded')
       if(!decodedToken) throw new HttpException('invalid token',501)
      
-      return decodedToken.userId
+      return decodedToken.id
     } catch (error) {
       console.log('erro no getuserbytoken')
       
@@ -56,7 +60,8 @@ export class TokenManipulator implements ITokenManipulator{
 
 
   splitToken(token:String){
-    return token.split(' ')[1]
+    const res = token.split(' ')
+    return res.length > 1? res[1] : res[0]
   }
 
  

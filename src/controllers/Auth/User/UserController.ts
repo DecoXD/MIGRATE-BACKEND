@@ -16,7 +16,9 @@ export class UserController implements IUserAuthControllerProtocol{
     //implements zod verification 
     const {name,email,password} = req.body
     const data = {
-      name,email,password
+      name,
+      email,
+      password, 
     }
     try {
       //initialize register verification

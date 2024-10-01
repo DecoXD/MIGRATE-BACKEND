@@ -24,7 +24,7 @@ export class ProductController implements IProductControllerProtocol{
   }
 
   async getProductById(req: Request, res: Response): Promise<Response> {
-    const {id} = req.params
+    const {id} = req.body
     try {
       const product = await this.repository.getProductById(id) 
       return res.status(201).json({product})
@@ -51,8 +51,8 @@ export class ProductController implements IProductControllerProtocol{
     }
 
     try {
-      const userId = await this.verificator.addProductVerificator(req,productData)
-      Object.assign(productData,{userId})
+      const userId = await this.verificator.addProductVerificator(req,productData)//% esquisito
+      Object.assign(productData,{product_owner:userId})
 
       const product = await this.repository.saveProduct(productData)
       
