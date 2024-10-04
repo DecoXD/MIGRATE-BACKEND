@@ -50,15 +50,15 @@ Esta API MIGRATE permite que usuários se cadastrem, façam login, adicionem pro
 
 ### Usuários
 
-- **POST /users/signup** - Cadastro de novos usuários
-- **POST /users/login** - Login de usuários
-- **POST /users/logout** - Logout de usuários
+- **POST /users/createaccount** - Cadastro de novos usuários
+- **POST /users/createadminaccount** - Login de usuários
+- **POST /users/signin** - Logout de usuários
 - **GET /users/orders** - Visualizar todas as ordens do usuário autenticado
 
 ### Produtos
 
-- **GET /products** - Listar todos os produtos
-- **GET /products/:id** - Buscar detalhes de um produto específico
+- **GET /p/** - Listar todos os produtos
+- **GET /p/:id** - Buscar detalhes de um produto específico
 - **POST /cart** - Adicionar produto ao carrinho
 - **POST /orders** - Emitir ordem de compra
 
@@ -94,4 +94,4 @@ Esta API MIGRATE permite que usuários se cadastrem, façam login, adicionem pro
 
 1. Clone o repositório:
    ```bash
-   git clone <url-do-repositorio>
+   git clone <https://github.com/DecoXD/MIGRATE-BACKEND>
