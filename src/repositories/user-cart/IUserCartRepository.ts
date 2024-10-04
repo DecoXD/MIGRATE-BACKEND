@@ -7,5 +7,6 @@ export type IUserCartRepositoryProtocol = {
   // clear():Promise<void>
   // deleteOne():Promise<void>
   // updateProductQty():Promise<void>  
+  getAllUserCarts(user_id:string)
   getActiveCartByUserId(userId:string):Promise<IUserCartAttributes >
 }

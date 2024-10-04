@@ -2,6 +2,7 @@ import { CreateUserCartProps, IUserCartAttributes,  } from "../../interfaces/car
 
 export type IUserCartControllerProtocol = {
   createCart(cardProps:CreateUserCartProps):Promise<IUserCartAttributes>
+  getAllUserCart(user_id:string)
   // closeCart(cartId:number):Promise<void>
   // removeProduct():Promise<void>
   // updateProductQty():Promise<void>

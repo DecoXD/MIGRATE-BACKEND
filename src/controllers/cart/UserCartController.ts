@@ -31,5 +31,15 @@ export class UserCartController implements IUserCartControllerProtocol{
     }
   }
 
+  async getAllUserCart(user_id:string){
+    try {
+      const cartList = await this.repository.getAllUserCarts(user_id)
+      return cartList
+    } catch (error) {
+      return error
+    }
+  }
+
+
 
 }

@@ -42,4 +42,14 @@ export class UserCartRepository implements IUserCartRepositoryProtocol{
       throw new Error(error.massage)
     }
   }
+  async getAllUserCarts(user_id: string) {
+    try {
+      const cartList = await prismaClient.cart.findMany({where:{
+        user_id
+      }})
+      return cartList
+    } catch (error) {
+      return error
+    }
+  }
 }

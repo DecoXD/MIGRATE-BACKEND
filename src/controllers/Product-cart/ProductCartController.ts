@@ -1,13 +1,16 @@
+import { prismaClient } from "../../config/dbConfig";
+import { IOrderRepositoryProtocol } from "../../repositories/order/IOrderRepository";
 import { IProductCartRepositoryProtocol } from "../../repositories/product-cart/IProductCartRepository";
+import { IUserCartRepositoryProtocol } from "../../repositories/user-cart/IUserCartRepository";
 import { IUserCartControllerProtocol } from "../cart/IUserCartControler";
 import { IProductControllerProtocol } from "../Products/IProductController";
 import { IProductCartControllerProtocol } from "./IProductCartController";
 
 export class ProductCartController implements IProductCartControllerProtocol{
   constructor(
-    private userCartController:IUserCartControllerProtocol,
+    private userCartRepository:IUserCartRepositoryProtocol,
     private productController:IProductControllerProtocol,
-    // private orderController,//create interface
+    private orderRepository:IOrderRepositoryProtocol,//create interface
     private repository:IProductCartRepositoryProtocol,
     // private productCartVerificator//create interface
     
@@ -29,7 +32,18 @@ export class ProductCartController implements IProductCartControllerProtocol{
   }
 
   async bundling(data: { cartId: number; user_id: string; total: number; }): Promise<void> {
-    
+    try {
+      //verificar se o carrinho está ativo 
+     
+      await this.orderRepository.create(data)
+      //alterar o status do carrinho para fechado
+      await this.userCartRepository.close(data.cartId)
+      
+      //enviar o id do carrinho para criar a ordem
+      
+    } catch (error) {
+      return error
+    }
   }
 
   async getAll(cart_id:number){
