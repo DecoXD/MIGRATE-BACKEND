@@ -1,7 +1,10 @@
 import { IProductControllerProtocol, IUserAuthControllerProtocol, ProductController, UserController } from "../controllers"
 import { IUserCartControllerProtocol } from "../controllers/cart/IUserCartControler"
 import { UserCartController } from "../controllers/cart/UserCartController"
+import { IProductCartControllerProtocol } from "../controllers/Product-cart/IProductCartController"
+import { ProductCartController } from "../controllers/Product-cart/ProductCartController"
 import { UserRepository } from "../repositories/auth/UserRepository"
+import { ProductCartRepository } from "../repositories/product-cart/ProductCartRepository"
 import { ProductRepository } from "../repositories/product/ProductRepository"
 import { UserCartRepository } from "../repositories/user-cart/UserCartRepository"
 import { TokenManipulator } from "../utilities/Token"
@@ -39,11 +42,14 @@ export class ControllerFactory{
 
     return new UserCartController(repository,verificator,tokenManipulator)
   }
-  static MakeShoppingCartController():IUserCartControllerProtocol {
-    const repository = new UserCartRepository()
-    const verificator = new UserCartVerificator(repository)
-    const tokenManipulator = UtilitiesFactory.MakeTokenManipulator()
+  
+  static MakeProductCartController():IProductCartControllerProtocol {
+    const userCartController = ControllerFactory.MakeUserCartController()
+    const productController = ControllerFactory.MakeProductController()
+    const repository = new ProductCartRepository()
 
-    return new UserCartController(repository,verificator,tokenManipulator)
-  }
+    return new ProductCartController(userCartController,productController,repository)
+}
+
+
 }

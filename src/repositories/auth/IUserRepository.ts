@@ -1,12 +1,12 @@
-import { IUserAttributes } from "../../interfaces/auth"
+import { IUserRegisterAttributes } from "../../interfaces/auth"
 
 export type IUserRepositoryProtocol = {
-    registerUser(userData:IUserAttributes):Promise<IUserAttributes>;
+    registerUser(userData:IUserRegisterAttributes):Promise<IUserRegisterAttributes>;
     
-    getUserById(id:string):Promise<IUserAttributes >;
-    getUserByEmail(email:string):Promise<IUserAttributes | null>;
-    getAllUsers():Promise<IUserAttributes[]|null>;
-    updateUser(id:string,data:IUserAttributes):Promise<void>;
+    getUserById(id:string):Promise<IUserRegisterAttributes >;
+    getUserByEmail(email:string):Promise<IUserRegisterAttributes | null>;
+    getAllUsers():Promise<IUserRegisterAttributes[]|null>;
+    updateUser(id:string,data:IUserRegisterAttributes):Promise<void>;
     unregisterUser(id:string):Promise<void>;
 }
 

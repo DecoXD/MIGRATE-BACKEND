@@ -5,6 +5,7 @@ import { IUserAuthControllerProtocol } from "./IUserController";
 import { ICreateUserVerificator } from "../../../utilities/verificators/auth/IUserAuthVerificator";
 import { ITokenManipulator } from "../../../utilities/interfaces";
 import { UserRole } from "@prisma/client";
+import { IUserRegisterAttributes } from "@interfaces/auth";
 
 
 export class UserController implements IUserAuthControllerProtocol{
@@ -93,6 +94,17 @@ export class UserController implements IUserAuthControllerProtocol{
 
 
 
+  }
+
+  async getUser(id: string): Promise<IUserRegisterAttributes> {
+    try {
+      const user = await this.repository.getUserById(id)
+      if(!user) throw new HttpException('usuário nao encontrado',404)
+      
+      return user
+    } catch (error) {
+      return error
+    }
   }
 
 }

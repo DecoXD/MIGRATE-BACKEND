@@ -13,7 +13,7 @@ export class UserCartVerificator implements IUserCartVerificatorProtocol {
     if(!userId) throw new HttpException('user not found when check if has an active cart',401)
     const userCart = await this.cartRepository.getActiveCartByUserId(userId)
     //se o usuário ja possui um carrinho ativo eu nao vou criar
-    if(userCart) true // % meio redundante mas nao influencia na logica.
+    if(userCart) return true // % meio redundante mas nao influencia na logica.
 
     //cart doesnt exists
     return false

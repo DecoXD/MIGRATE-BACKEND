@@ -8,7 +8,6 @@ export async function VerifyUserPermissions(req:Request,res:Response,next:NextFu
   // se for admin verificar a senha de acesso
 
   try {
-    console.log(req.originalUrl)
     const token = req.headers.authorization
     const userId = await UtilitiesFactory.MakeTokenManipulator().getUserByToken(token)
     const user = await RepositoryFactory.createUserRepository().getUserById(userId)

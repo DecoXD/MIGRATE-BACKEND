@@ -73,7 +73,8 @@ export class ProductController implements IProductControllerProtocol{
   async deleteProduct(req: Request, res: Response): Promise<Response> {
     try {
       const {id} = req.body
-      await this.verificator.deleteProductVerificator(req,id)
+   
+      // await this.verificator.deleteProductVerificator(req,id)
       await this.repository.deleteProduct(id)
       return res.status(201).json({message:'produto deletado com sucesso'})
     } catch (error) {

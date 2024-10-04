@@ -1,5 +1,5 @@
 import { HttpException } from "../../../exceptions/HttpException";
-import { IUserAttributes, IUserLoginAttributes } from "../../../interfaces/auth";
+import { IUserRegisterAttributes, IUserLoginAttributes } from "../../../interfaces/auth";
 import { ICreateUserVerificator } from "./IUserAuthVerificator";
 import { IUserRepositoryProtocol } from "../../../repositories/auth/IUserRepository";
 import bcrypt from 'bcrypt';
@@ -12,7 +12,7 @@ export class CreateUserVerificator implements ICreateUserVerificator{
 
   constructor(private repository:IUserRepositoryProtocol){}
 
-  async emailAlreadyExists(email:string): Promise<IUserAttributes | undefined> {
+  async emailAlreadyExists(email:string): Promise<IUserRegisterAttributes | undefined> {
 
       const user = await this.repository.getUserByEmail(email)
 
@@ -58,7 +58,7 @@ export class CreateUserVerificator implements ICreateUserVerificator{
     }
   }
 
-  async startRegisterVerification(user:IUserAttributes): Promise<void> {
+  async startRegisterVerification(user:IUserRegisterAttributes): Promise<void> {
     try {
       //check if all fields are filled
       allFieldsAreFilled(user)

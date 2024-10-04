@@ -21,57 +21,64 @@ model User {
 }
 
 model Product {
-  id          Int         @id @unique @default(autoincrement())
-  name        String
-  description String
-  price       Float
-  stock       Int
-  category    String
-  discount    Int?        @default(0)
-  created_at  DateTime    @default(now())
+  id            Int           @id @unique @default(autoincrement())
+  name          String
+  description   String
+  price         Float
+  stock         Int
+  category      String
+  discount      Int?          @default(0)
+  created_at    DateTime      @default(now())
   product_owner String
-  owner      User  @relation (fields: [product_owner],references: [id])
-  CartItem    CartItem[]
-  OrderItem   OrderItem[]
+  owner         User          @relation(fields: [product_owner], references: [id], onDelete: Cascade)
+  ProductCart   ProductCart[]
 }
 
 model Cart {
-  id         Int        @id @unique @default(autoincrement())
+  id         Int           @id @unique @default(autoincrement())
   user_id    String
-  user       User       @relation(fields: [user_id], references: [id])
-  status     CartStatus @default(ACTIVE)
-  created_at DateTime   @default(now())
-  products   CartItem[]
+  user       User          @relation(fields: [user_id], references: [id])
+  status     CartStatus    @default(ACTIVE)
+  created_at DateTime      @default(now())
+  order      Order[]
+  products   ProductCart[]
 }
 
-model CartItem {
-  id         Int     @id @unique @default(autoincrement())
+model ProductCart {
+  id         Int      @id @unique @default(autoincrement())
   cart_id    Int
   product_id Int
-  quanty     Int
-  carrinho   Cart    @relation(fields: [cart_id], references: [id])
-  product    Product @relation(fields: [product_id], references: [id])
+  quanty     Int      @default(1)
+  carrinho   Cart     @relation(fields: [cart_id], references: [id],onDelete: Cascade)
+  product    Product  @relation(fields: [product_id], references: [id],onDelete: Cascade)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([cart_id, product_id]) // Constraint única composta
 }
 
 model Order {
-  id         Int         @id  @unique @default(autoincrement())
+  id         Int         @id @unique @default(autoincrement())
   user_id    String
   user       User        @relation(fields: [user_id], references: [id])
+  cart_id    Int
+  Cart_id    Cart        @relation(fields: [cart_id], references: [id])
   created_at DateTime    @default(now())
   total      Float
-  status     String
-  product    OrderItem[]
+  status     OrderStatus @default(PENDING)
+
+  @@index([cart_id])
 }
 
-model OrderItem {
-  id            Int     @id @unique @default(autoincrement())
-  order_id      Int
-  product_id    Int
-  quanty        Int
-  unitary_price Float
-  order         Order   @relation(fields: [order_id], references: [id])
-  product       Product @relation(fields: [product_id], references: [id])
-}
+// model OrderItem {
+//   id            Int     @id @unique @default(autoincrement())
+//   order_id      Int
+//   product_id    Int
+//   quanty        Int
+//   unitary_price Float
+//   order         Order   @relation(fields: [order_id], references: [id])
+//   product       Product @relation(fields: [product_id], references: [id])
+// }
 
 model Notification {
   id         Int      @id @unique @default(autoincrement())
@@ -90,4 +97,9 @@ enum UserRole {
 enum CartStatus {
   ACTIVE
   CLOSED
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
 }

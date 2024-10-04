@@ -18,6 +18,7 @@ export class UserCartController implements IUserCartControllerProtocol{
   async createCart({userId}:CreateUserCartProps): Promise<IUserCartAttributes> {
     try {
       const alreadyExists = await this.verificator.checkIfUserHasAnActiveCart(userId)
+      console.log(alreadyExists)
       if(alreadyExists) throw new HttpException('this user already has a cart with ACTIVE status',403)
 
       const newCart = await this.repository.create(userId)

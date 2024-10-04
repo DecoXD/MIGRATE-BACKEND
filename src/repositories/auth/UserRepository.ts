@@ -3,7 +3,7 @@
 /*eslint disable */
 import { prismaClient } from "../../config/dbConfig";
 import { HttpException } from "../../exceptions/HttpException";
-import { IUserAttributes } from "../../interfaces/auth";
+import { IUserRegisterAttributes } from "../../interfaces/auth";
 
 import { IUserRepositoryProtocol } from "./IUserRepository";
 import bcrypt from 'bcrypt';
@@ -17,7 +17,7 @@ export class UserRepository implements IUserRepositoryProtocol {
 
 
 
-  async registerUser(userData: IUserAttributes) {
+  async registerUser(userData: IUserRegisterAttributes) {
     try {
       const {name,email,password,role} = userData
      
@@ -45,10 +45,13 @@ export class UserRepository implements IUserRepositoryProtocol {
   
   }
 
-  async getUserById(id:string):Promise<IUserAttributes >{
+  async getUserById(id:string):Promise<IUserRegisterAttributes >{
    
     const user = await  prismaClient.user.findUnique({ where:{
       id:id
+    },select:{
+      name:true,
+
     }})
     if(!user) throw new HttpException('user not found',401)
     return user
@@ -68,12 +71,12 @@ export class UserRepository implements IUserRepositoryProtocol {
 
   }
 
-  async getAllUsers(): Promise<IUserAttributes[]> {
+  async getAllUsers(): Promise<IUserRegisterAttributes[]> {
     const user = await prismaClient.user.findMany()
     return user
   }
 
-  async updateUser(id:string,data:IUserAttributes){
+  async updateUser(id:string,data:IUserRegisterAttributes){
     await prismaClient.user.update({
       where:{
         id:id
