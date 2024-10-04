@@ -74,10 +74,12 @@ Esta API MIGRATE permite que usuários se cadastrem, façam login, adicionem pro
 
 ## Tecnologias Utilizadas
 
-- **Node.js** com **Express** para construção do backend.
-- **MongoDB** para persistência de dados.
+- **Node.js** com **TypeScript** para o desenvolvimento da aplicação.
+- **Express** como framework para construção do backend.
+- **Prisma** como ORM para interagir com o banco de dados.
 - **JWT** para autenticação e controle de acesso.
 - **Docker** para containerização da aplicação.
+
 
 ---
 
