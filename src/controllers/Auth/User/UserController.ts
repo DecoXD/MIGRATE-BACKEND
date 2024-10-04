@@ -5,7 +5,7 @@ import { IUserAuthControllerProtocol } from "./IUserController";
 import { ICreateUserVerificator } from "../../../utilities/verificators/auth/IUserAuthVerificator";
 import { ITokenManipulator } from "../../../utilities/interfaces";
 import { UserRole } from "@prisma/client";
-import { IUserRegisterAttributes } from "@interfaces/auth";
+import { IUserAttributes } from "@interfaces/auth";
 
 
 export class UserController implements IUserAuthControllerProtocol{
@@ -14,7 +14,6 @@ export class UserController implements IUserAuthControllerProtocol{
     
   }
   
-
   async createUser(req: Request, res: Response): Promise<Response> {
     //implements zod verification 
     const {name,email,password} = req.body
@@ -40,7 +39,6 @@ export class UserController implements IUserAuthControllerProtocol{
       }
     }
   }
-
 
   async createAdminAccount(req:Request,res:Response):Promise<Response>{
     const {name,email,password} = req.body
@@ -68,7 +66,6 @@ export class UserController implements IUserAuthControllerProtocol{
     }
   }
 
-  //login fn
   async toAccessUser(req:Request,res:Response):Promise<Response> {
     const {email,password} = req.body
     const data = {
@@ -96,7 +93,7 @@ export class UserController implements IUserAuthControllerProtocol{
 
   }
 
-  async getUser(id: string): Promise<IUserRegisterAttributes> {
+  async getUser(id: string): Promise<IUserAttributes> {
     try {
       const user = await this.repository.getUserById(id)
       if(!user) throw new HttpException('usuário nao encontrado',404)

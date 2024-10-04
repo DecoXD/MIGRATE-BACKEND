@@ -3,7 +3,7 @@
 /*eslint disable */
 import { prismaClient } from "../../config/dbConfig";
 import { HttpException } from "../../exceptions/HttpException";
-import { IUserRegisterAttributes } from "../../interfaces/auth";
+import { IUserAttributes, IUserRegisterAttributes } from "../../interfaces/auth";
 
 import { IUserRepositoryProtocol } from "./IUserRepository";
 import bcrypt from 'bcrypt';
@@ -45,14 +45,19 @@ export class UserRepository implements IUserRepositoryProtocol {
   
   }
 
-  async getUserById(id:string):Promise<IUserRegisterAttributes >{
+  async getUserById(id:string):Promise<IUserAttributes >{
    
     const user = await  prismaClient.user.findUnique({ where:{
       id:id
     },select:{
       name:true,
+      email:true,
+      id:true,
+      role:true,
+      
 
     }})
+    
     if(!user) throw new HttpException('user not found',401)
     return user
 

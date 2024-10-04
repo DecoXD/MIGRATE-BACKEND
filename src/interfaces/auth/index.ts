@@ -1,11 +1,12 @@
 /* eslint-disable */
+import { UserRole } from "@prisma/client";
 import { Request, Response } from "express";
 
 export type IUserAttributes = {
   name:string,
   email:string,
   id?:string
-  role?:"ADMIN" | "USER"
+  role?: UserRole
 }
 
 export type IUserRegisterAttributes = {
