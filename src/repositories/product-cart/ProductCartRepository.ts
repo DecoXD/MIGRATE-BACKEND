@@ -6,15 +6,15 @@ export class ProductCartRepository implements IProductCartRepositoryProtocol {
 
   constructor(){}
 
-  async create(cart_id: number, product_id: number): Promise<void> {
+  async create(cart_id: number, product_id: number,price:number): Promise<void> {
    try {
       const cart = await prismaClient.productCart.create({
-        data:{cart_id,product_id}
+        data:{cart_id,product_id,price}
       })
       console.log('oi',cart)
    } catch (error) {
-      console.log('erro no create in productcart repository',error.message)
-      return error
+      // console.log('erro no create in productcart repository',error.message)
+      throw new Error(error)
    }
   }
 
@@ -39,6 +39,17 @@ export class ProductCartRepository implements IProductCartRepositoryProtocol {
 
   async updateQuanty(productId: number): Promise<void> {
     
+  }
+
+  async getByCartId(cart_id: number): Promise<ProductCartAttributes[]> {
+    try {
+      const productList = await prismaClient.productCart.findMany({where:{
+        cart_id
+      }})
+      return productList
+    } catch (error) {
+      return error 
+    }
   }
 
 }

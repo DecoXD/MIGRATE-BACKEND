@@ -49,6 +49,7 @@ model ProductCart {
   cart_id    Int
   product_id Int
   quanty     Int      @default(1)
+  price      Decimal
   carrinho   Cart     @relation(fields: [cart_id], references: [id],onDelete: Cascade)
   product    Product  @relation(fields: [product_id], references: [id],onDelete: Cascade)
   created_at DateTime @default(now())
@@ -64,7 +65,7 @@ model Order {
   cart_id    Int
   Cart_id    Cart        @relation(fields: [cart_id], references: [id])
   created_at DateTime    @default(now())
-  total      Float
+  total      Decimal
   status     OrderStatus @default(PENDING)
 
   @@index([cart_id])

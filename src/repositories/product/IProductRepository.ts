@@ -7,4 +7,5 @@ export type IProductRepositoryProtocol = {
   saveProduct(product:ProductAttributes):Promise<ProductAttributes>
   deleteProduct(id:number):Promise<void>
   updateProduct(id:number,data:ProductAttributes):Promise<void>  
+  getPriceById(id:number):Promise<number>
 }

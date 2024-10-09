@@ -92,4 +92,17 @@ export class ProductRepository implements IProductRepositoryProtocol{
       } throw new HttpException('ocurred a system error when your product are been updated',501)
     }
   }
+
+  async getPriceById(id: number): Promise<number> {
+    try {
+      const productPrice = await prismaClient.product.findUnique({where:{
+        id
+      },select:{
+        price:true
+      }})
+      return productPrice.price
+    } catch (error) {
+      return error
+    }
+  }
 }

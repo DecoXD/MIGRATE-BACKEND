@@ -4,6 +4,7 @@ import { UserCartController } from "../controllers/cart/UserCartController"
 import { IProductCartControllerProtocol } from "../controllers/Product-cart/IProductCartController"
 import { ProductCartController } from "../controllers/Product-cart/ProductCartController"
 import { UserRepository } from "../repositories/auth/UserRepository"
+import { OrderRepository } from "../repositories/order/OrderRepository"
 import { ProductCartRepository } from "../repositories/product-cart/ProductCartRepository"
 import { ProductRepository } from "../repositories/product/ProductRepository"
 import { UserCartRepository } from "../repositories/user-cart/UserCartRepository"
@@ -44,11 +45,12 @@ export class ControllerFactory{
   }
   
   static MakeProductCartController():IProductCartControllerProtocol {
-    const userCartController = ControllerFactory.MakeUserCartController()
-    const productController = ControllerFactory.MakeProductController()
+    const userCartController = new UserCartRepository()
+    const productController = new ProductRepository
+    const orderRepository = new OrderRepository()
     const repository = new ProductCartRepository()
 
-    return new ProductCartController(userCartController,productController,repository)
+    return new ProductCartController(userCartController,productController,orderRepository,repository)
 }
 
 

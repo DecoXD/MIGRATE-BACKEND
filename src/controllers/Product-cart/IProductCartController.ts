@@ -1,6 +1,7 @@
 type ProductCartManagerProps = {
   product_id:number
   cart_id:number
+  price:number
 } 
 
 type BundlingProps = {
