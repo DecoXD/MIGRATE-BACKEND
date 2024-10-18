@@ -7,3 +7,8 @@ export type ProductAttributes = {
   category:string;
 
 }
+
+export type AddProductAttributes = {
+  productData:ProductAttributes,
+  product_owner:string
+}

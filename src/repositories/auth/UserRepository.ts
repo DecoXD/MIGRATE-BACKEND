@@ -19,7 +19,7 @@ export class UserRepository implements IUserRepositoryProtocol {
 
   async registerUser(userData: IUserRegisterAttributes) {
     try {
-      const {name,email,password,role} = userData
+      const {name,email,password} = userData
      
       const salt = bcrypt.genSaltSync(12)
       const hashPassword = bcrypt.hashSync(password,salt)// refatorar 
@@ -28,7 +28,7 @@ export class UserRepository implements IUserRepositoryProtocol {
         name,
         email,
         password:hashPassword,
-        role:role ? role : "USER"
+        
       }
 
       const user = await prismaClient.user.create({
@@ -39,7 +39,7 @@ export class UserRepository implements IUserRepositoryProtocol {
       }
       return user
     } catch (error) {
-      console.log('error no registeruser')
+      throw new Error("ocorreu um erro ao tentar criar sua conta")
     }
   
   

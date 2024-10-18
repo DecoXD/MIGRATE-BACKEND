@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { UserRole } from "@prisma/client";
+import { User, UserRole } from "@prisma/client";
 import { Request, Response } from "express";
 
 export type IUserAttributes = {
@@ -7,17 +7,26 @@ export type IUserAttributes = {
   email:string,
   id?:string
   role?: UserRole
+  password?: string
+}
+
+export type ICreateUserResponse = {
+  newUser:IUserAttributes,
+  token:string
 }
 
 export type IUserRegisterAttributes = {
     name:string,
     email:string,
-    password:string,
-    id?:string
-    role?:"ADMIN" | "USER"
+    password:string,  
 }
 
-
+export type IAdminRegisterAttributes = {
+  name:string,
+  email:string,
+  password:string,
+  role:UserRole
+}
 
 export type IUserLoginAttributes = {
     email:string,
@@ -25,4 +34,7 @@ export type IUserLoginAttributes = {
 }
 
 
-
+export type IUserLoginResponse = {
+  token:string,
+  message:string
+}

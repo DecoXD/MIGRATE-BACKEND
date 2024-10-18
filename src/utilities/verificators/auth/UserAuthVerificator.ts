@@ -1,5 +1,5 @@
 import { HttpException } from "../../../exceptions/HttpException";
-import { IUserRegisterAttributes, IUserLoginAttributes } from "../../../interfaces/auth";
+import { IUserRegisterAttributes, IUserLoginAttributes, IUserAttributes } from "../../../interfaces/auth";
 import { ICreateUserVerificator } from "./IUserAuthVerificator";
 import { IUserRepositoryProtocol } from "../../../repositories/auth/IUserRepository";
 import bcrypt from 'bcrypt';
@@ -12,7 +12,7 @@ export class CreateUserVerificator implements ICreateUserVerificator{
 
   constructor(private repository:IUserRepositoryProtocol){}
 
-  async emailAlreadyExists(email:string): Promise<IUserRegisterAttributes | undefined> {
+  async emailAlreadyExists(email:string): Promise<IUserAttributes | undefined> {
 
       const user = await this.repository.getUserByEmail(email)
 

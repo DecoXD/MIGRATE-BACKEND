@@ -1,3 +1,4 @@
+import { CreateOrderAttributes } from "@interfaces/order";
 import { prismaClient } from "../../config/dbConfig";
 import { IOrderRepositoryProtocol } from "./IOrderRepository";
 
@@ -9,9 +10,24 @@ export class OrderRepository implements IOrderRepositoryProtocol {
 
   }
 
-  async create(data: { cart_id: number; user_id: string; total: number; }): Promise<void> {
+  
+
+  async getOrderByUserId(user_id: string): Promise<{ cart_id: number; user_id: string; total: number; status: "PENDING" | "COMPLETED"; }[]> {
     try {
-      await prismaClient.order.create({
+      const orderList = await prismaClient.order.findMany({where:{
+        user_id:user_id
+      }})
+      return orderList
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
+
+
+
+  async create(data: { cart_id: number; user_id: string; total: number; }): Promise<CreateOrderAttributes> {
+    try {
+      const order = await prismaClient.order.create({
         data:{
           total:data.total,
           user_id:data.user_id,
@@ -19,8 +35,9 @@ export class OrderRepository implements IOrderRepositoryProtocol {
         },
         
       })
+      return order
     } catch (error) {
-      
+      throw new Error(error)
     }
   }
 

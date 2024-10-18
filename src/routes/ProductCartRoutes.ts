@@ -11,9 +11,6 @@ ProductCartRouter.get('/:id',verifyToken,async (req,res,next) =>{
 
   // only active cart has valid to get data and
   // only cart owner can be access the cart
-
-
-
   const response = await controller.getAll(cart_id)
  
   if(response instanceof Error){

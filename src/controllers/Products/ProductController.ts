@@ -3,6 +3,7 @@ import { IProductRepositoryProtocol } from "../../repositories/product/IProductR
 import { IProductControllerProtocol } from "./IProductController";
 import { IProductVerificatorProtocol } from "../../utilities/verificators/product/IProductVerificatorProtocol";
 import { HttpException } from "../../exceptions/HttpException";
+import { AddProductAttributes, ProductAttributes } from "@interfaces/product";
 
 
 export class ProductController implements IProductControllerProtocol{
@@ -13,12 +14,12 @@ export class ProductController implements IProductControllerProtocol{
     
   }
 
-  async getAllProducts(req: Request, res: Response):Promise<Response>{
+  async getAllProducts():Promise<ProductAttributes[]>{
     try {
       const productList = await this.repository.getAll()
-      return res.status(200).json({productList})
+      return productList
     } catch (error) {
-      res.status(500).json({message:error.message})
+      return error
     }
     return  
   }
@@ -37,34 +38,19 @@ export class ProductController implements IProductControllerProtocol{
   
   }
 
-  async addProduct(req: Request, res: Response): Promise<Response> {
-   
-    const {name,price,description,stock,category,discount} = req.body;
-    
-    const productData = {
-      name,
-      price,
-      description,
-      stock,
-      discount,
-      category
-    }
+  async addProduct({productData,product_owner}:AddProductAttributes): Promise<ProductAttributes> {
 
     try {
-      const userId = await this.verificator.addProductVerificator(req,productData)//% esquisito
-      Object.assign(productData,{product_owner:userId})
+      await this.verificator.addProductVerificator(productData)//% esquisito
+      Object.assign(productData,product_owner)
 
       const product = await this.repository.saveProduct(productData)
       
      
-      return res.status(200).json({message:'produto cadastrado com sucesso !',product})
+      return product
       
     } catch (error) {
-      if(error instanceof HttpException){
-        return res.status(error.statusCode).json({message:error.message})
-      } else{
-        return res.status(500).json({message:'something wrong has been ocurred !'})
-      }
+      return error
     }
 
   
@@ -93,8 +79,8 @@ export class ProductController implements IProductControllerProtocol{
       price
     }
     try {
-      await this.verificator.addProductVerificator(req,data)
-      await this.repository.updateProduct(id,data)
+      // await this.verificator.addProductVerificator(req,data)
+      // await this.repository.updateProduct(id,data)
       return res.status(201).json({message:'item atualizado com sucesso'})
     } catch (error) {
       return res.status(500).json({message:error.message})

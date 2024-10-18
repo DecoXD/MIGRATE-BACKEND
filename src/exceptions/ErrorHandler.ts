@@ -7,7 +7,7 @@ export function ErrorHandler (err,req,res,next){
     //evitar mandar a mensagem de erros sistemicos, em vez disso registrar em logs e mandar mensagens genericas aos clientes
     return res.status(500).json({message:"System Error try again latter " })
   } else{
-    res.status(500).json({message:"An unexpected Error occurred " })
+    return res.status(500).json({message:"An unexpected Error occurred " })
   }
   
 

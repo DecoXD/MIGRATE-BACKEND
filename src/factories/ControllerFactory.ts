@@ -1,6 +1,8 @@
 import { IProductControllerProtocol, IUserAuthControllerProtocol, ProductController, UserController } from "../controllers"
 import { IUserCartControllerProtocol } from "../controllers/cart/IUserCartControler"
 import { UserCartController } from "../controllers/cart/UserCartController"
+import { IOrderControllerProtocol } from "../controllers/Order/IOrderController"
+import { OrderController } from "../controllers/Order/OrderController"
 import { IProductCartControllerProtocol } from "../controllers/Product-cart/IProductCartController"
 import { ProductCartController } from "../controllers/Product-cart/ProductCartController"
 import { UserRepository } from "../repositories/auth/UserRepository"
@@ -11,6 +13,7 @@ import { UserCartRepository } from "../repositories/user-cart/UserCartRepository
 import { TokenManipulator } from "../utilities/Token"
 import { CreateUserVerificator } from "../utilities/verificators/auth/UserAuthVerificator"
 import { UserCartVerificator } from "../utilities/verificators/cart/CartVerificator"
+import { OrderVerificator } from "../utilities/verificators/order/OrderVerificator"
 import { ProductVerificator } from "../utilities/verificators/product/ProductVerificator.ts"
 import { UtilitiesFactory } from "./UtilitiesFactory"
 
@@ -53,5 +56,13 @@ export class ControllerFactory{
     return new ProductCartController(userCartController,productController,orderRepository,repository)
 }
 
+  static MakeOrderController():IOrderControllerProtocol{
+    const cartRepository = new UserCartRepository()
+    const productCartRepository = new ProductCartRepository()
+    const orderRepository  = new OrderRepository()
+    const verificator = new OrderVerificator(cartRepository)
+    return new OrderController(productCartRepository,cartRepository,orderRepository,verificator)
+
+  }
 
 }

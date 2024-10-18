@@ -5,7 +5,7 @@ import { IUserAuthControllerProtocol } from "./IUserController";
 import { ICreateUserVerificator } from "../../../utilities/verificators/auth/IUserAuthVerificator";
 import { ITokenManipulator } from "../../../utilities/interfaces";
 import { UserRole } from "@prisma/client";
-import { IUserAttributes } from "@interfaces/auth";
+import { IAdminRegisterAttributes, ICreateUserResponse, IUserAttributes, IUserLoginAttributes, IUserLoginResponse, IUserRegisterAttributes } from "@interfaces/auth";
 
 
 export class UserController implements IUserAuthControllerProtocol{
@@ -14,14 +14,9 @@ export class UserController implements IUserAuthControllerProtocol{
     
   }
   
-  async createUser(req: Request, res: Response): Promise<Response> {
+  async createUser(data:IUserRegisterAttributes): Promise<ICreateUserResponse> {
     //implements zod verification 
-    const {name,email,password} = req.body
-    const data = {
-      name,
-      email,
-      password, 
-    }
+    
     try {
       //initialize register verification
       
@@ -29,25 +24,15 @@ export class UserController implements IUserAuthControllerProtocol{
       const newUser = await this.repository.registerUser(data) // talvez deixar o hash para outra classe possa ser uma boa ideia
       //create a token
       const token = await this.tokenManipulator.createToken(newUser.id)
-      return res.status(201).json({user:newUser,message:'Usuário cadastrado com sucesso',token})
+      return {newUser,token}
 
     } catch (error) {
-      if(error instanceof HttpException){
-       return res.status(error.statusCode).json({message:error.message})
-      }   else{
-        throw new HttpException('system error create user',501)
-      }
+      return error
     }
   }
 
-  async createAdminAccount(req:Request,res:Response):Promise<Response>{
-    const {name,email,password} = req.body
-    const data = {
-      name,
-      email,
-      password, 
-      role:UserRole.ADMIN
-    }
+  async createAdminAccount(data:IAdminRegisterAttributes):Promise<ICreateUserResponse>{
+    
     try {
       //initialize register verification
       
@@ -55,37 +40,24 @@ export class UserController implements IUserAuthControllerProtocol{
       const newUser = await this.repository.registerUser(data) // talvez deixar o hash para outra classe possa ser uma boa ideia
       //create a token
       const token = await this.tokenManipulator.createToken(newUser.id)
-      return res.status(201).json({user:newUser,message:'Usuário cadastrado com sucesso',token})
+      return {newUser,token}
 
     } catch (error) {
-      if(error instanceof HttpException){
-       return res.status(error.statusCode).json({message:error.message})
-      }   else{
-        throw new HttpException('system error create user',501)
-      }
+      return error
     }
   }
 
-  async toAccessUser(req:Request,res:Response):Promise<Response> {
-    const {email,password} = req.body
-    const data = {
-      email,
-      password
-    }
+  async toAccessUser(data:IUserLoginAttributes):Promise<IUserLoginResponse> {
+   
     try {
-      // the responsability to verify if email exists and password and if others business rules matches is directed to verificator      
       await this.verificator.startLoginVerification(data)     
-       const user = await this.repository.getUserByEmail(email)
-      //send token to registred    
+      const user = await this.repository.getUserByEmail(data.email)
+      
       const token = await this.tokenManipulator.createToken(user.id)
-      return res.status(200).json({message:'ok',token})
-      //handling login
+      return {message:"acesso autorizado!",token}
+     
     } catch (error) {
-      if(error instanceof HttpException){
-        res.status(error.statusCode).json({message:error.message})
-      } else{
-        res.status(501).json({message:"system error usercontroller"})
-      }
+      return error
     }
 
 

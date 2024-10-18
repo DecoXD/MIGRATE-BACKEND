@@ -49,9 +49,9 @@ model ProductCart {
   cart_id    Int
   product_id Int
   quanty     Int      @default(1)
-  price      Decimal
-  carrinho   Cart     @relation(fields: [cart_id], references: [id],onDelete: Cascade)
-  product    Product  @relation(fields: [product_id], references: [id],onDelete: Cascade)
+  price      Float
+  carrinho   Cart     @relation(fields: [cart_id], references: [id], onDelete: Cascade)
+  product    Product  @relation(fields: [product_id], references: [id], onDelete: Cascade)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -62,13 +62,11 @@ model Order {
   id         Int         @id @unique @default(autoincrement())
   user_id    String
   user       User        @relation(fields: [user_id], references: [id])
-  cart_id    Int
+  cart_id    Int         @unique
   Cart_id    Cart        @relation(fields: [cart_id], references: [id])
   created_at DateTime    @default(now())
-  total      Decimal
+  total      Float
   status     OrderStatus @default(PENDING)
-
-  @@index([cart_id])
 }
 
 // model OrderItem {
