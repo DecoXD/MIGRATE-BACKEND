@@ -7,3 +7,16 @@ export type CreateOrderAttributes = {
   total:number
   status:OrderStatus
 }
+
+export type CreateOrderResponseBody = {
+  message:string,
+
+}
+
+export type OrderAttributes = {
+  cart_id:number
+  user_id:string
+  total: number
+  status:"PENDING"|"COMPLETED"
+
+}

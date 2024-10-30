@@ -4,7 +4,7 @@ import { Request, Response } from "express"
 
 export type IProductControllerProtocol = {
   getAllProducts():Promise<ProductAttributes[]>
-  getProductById(req:Request,res:Response):Promise<Response>
+  
   addProduct(data:AddProductAttributes):Promise<AddProductResponseBody>
   updateProductData(data:UpdateProductAttributes)
   deleteProduct(productId:number,userId:string):Promise<ManegementProductResponse>

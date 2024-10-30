@@ -16,7 +16,6 @@ export class UserController implements IUserAuthControllerProtocol{
     //implements zod verification 
     
     try {
-      //initialize register verification
       const {message,token} = await this.service.register(data)
      
       return {message,token}

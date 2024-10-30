@@ -1,8 +1,9 @@
 import { TokenManipulator } from "../utilities/Token"
 import { CreateUserService } from "../services/auth/UserAuthService" 
 import { UserCartService } from "../services/cart/CartService"
-import { OrderVerificator } from "../services/order/OrderVerificator"
-import { ProductService } from "../services/product/ProductService.ts"
+import { OrderService } from "../services/order/OrderService"
+import { ProductService } from "../services/product/ProductService"
+
 import { IProductControllerProtocol, 
   IUserAuthControllerProtocol, 
   ProductController, 
@@ -19,6 +20,7 @@ import { ProductCartRepository } from "../repositories/product-cart/ProductCartR
 import { ProductRepository } from "../repositories/product/ProductRepository"
 import { UserCartRepository } from "../repositories/user-cart/UserCartRepository"
 import { UtilitiesFactory } from "./UtilitiesFactory"
+import { ProductCartService } from "../services/product-cart/ProductCartService"
 
 
 export class ControllerFactory{
@@ -44,27 +46,24 @@ export class ControllerFactory{
 
   static MakeUserCartController():IUserCartControllerProtocol {
     const repository = new UserCartRepository()
-    const verificator = new UserCartService(repository)
-    const tokenManipulator = UtilitiesFactory.MakeTokenManipulator()
-
-    return new UserCartController(repository,verificator,tokenManipulator)
+    const service = new UserCartService(repository)
+    return new UserCartController(service)
   }
   
   static MakeProductCartController():IProductCartControllerProtocol {
-    const userCartController = new UserCartRepository()
-    const productController = new ProductRepository
-    const orderRepository = new OrderRepository()
+    const productRepository = new ProductRepository
     const repository = new ProductCartRepository()
+    const service = new ProductCartService(productRepository,repository)
 
-    return new ProductCartController(userCartController,productController,orderRepository,repository)
+    return new ProductCartController(service)
 }
 
   static MakeOrderController():IOrderControllerProtocol{
     const cartRepository = new UserCartRepository()
     const productCartRepository = new ProductCartRepository()
     const orderRepository  = new OrderRepository()
-    const verificator = new OrderVerificator(cartRepository)
-    return new OrderController(productCartRepository,cartRepository,orderRepository,verificator)
+    const service = new OrderService(productCartRepository,cartRepository,orderRepository)
+    return new OrderController(service)
 
   }
 

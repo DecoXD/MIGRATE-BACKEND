@@ -1,4 +1,4 @@
-import { CreateOrderAttributes } from "@interfaces/order";
+import { CreateOrderAttributes, OrderAttributes } from "@interfaces/order";
 import { prismaClient } from "../../config/dbConfig";
 import { IOrderRepositoryProtocol } from "./IOrderRepository";
 
@@ -12,7 +12,7 @@ export class OrderRepository implements IOrderRepositoryProtocol {
 
   
 
-  async getOrderByUserId(user_id: string): Promise<{ cart_id: number; user_id: string; total: number; status: "PENDING" | "COMPLETED"; }[]> {
+  async getOrderByUserId(user_id: string): Promise<OrderAttributes[]> {
     try {
       const orderList = await prismaClient.order.findMany({where:{
         user_id:user_id
@@ -35,6 +35,7 @@ export class OrderRepository implements IOrderRepositoryProtocol {
         },
         
       })
+      if(!order) throw new Error('Algo errado aconteceu ao efetuar seu pedido!')
       return order
     } catch (error) {
       throw new Error(error)

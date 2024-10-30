@@ -3,7 +3,7 @@ import { TokenManipulator } from "../utilities/Token";
 
 export class UtilitiesFactory{
 
-  static  'MakeTokenManipulator'():ITokenManipulator{
+  static  MakeTokenManipulator():ITokenManipulator{
     return new TokenManipulator()
   }
 

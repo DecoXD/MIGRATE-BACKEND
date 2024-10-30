@@ -70,10 +70,10 @@ export class ProductService implements IProductServiceProtocol{
     
     
       if(!updatedProduct) throw new Error('aconteceu algum erro ao atualizar os dados do produto')
-      return {message:"produto atualizado com sucessos",product:updatedProduct || null}
+      return {message:"produto atualizado com sucesso",product:updatedProduct || null}
     } catch (error) {
       
-      return {message:error,product:null}
+      return error
     }
 
     

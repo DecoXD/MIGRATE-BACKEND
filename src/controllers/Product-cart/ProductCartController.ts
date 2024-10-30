@@ -1,3 +1,4 @@
+import { IProductCartServiceProtocol } from "@services/product-cart/IProductCartService";
 import { IOrderRepositoryProtocol } from "../../repositories/order/IOrderRepository";
 import { IProductCartRepositoryProtocol } from "../../repositories/product-cart/IProductCartRepository";
 import { IProductRepositoryProtocol } from "../../repositories/product/IProductRepository";
@@ -7,22 +8,18 @@ import { IProductCartControllerProtocol } from "./IProductCartController";
 
 export class ProductCartController implements IProductCartControllerProtocol{
   constructor(
-    private userCartRepository:IUserCartRepositoryProtocol,
-    private productRepository:IProductRepositoryProtocol,
-    private orderRepository:IOrderRepositoryProtocol,//create interface
-    private repository:IProductCartRepositoryProtocol,
-    // private productCartVerificator//create interface
+    
+    private service:IProductCartServiceProtocol
     
     
   ){}
 
   async add({product_id,cart_id}: { product_id: number; cart_id: number;}) {
    try {
-    const price = await this.productRepository.getPriceById(product_id)
-    
-    const newProductCart = await this.repository.create(cart_id,product_id,price)
+    const newProductCart = await this.service.add({product_id,cart_id})
     return newProductCart
    } catch (error) {
+    //aq
     console.log('erro no add product cart controller')
     return error
    }
@@ -47,7 +44,7 @@ export class ProductCartController implements IProductCartControllerProtocol{
 
   async getAll(cart_id:number){
     try {
-      const cartItems = await this.repository.readAll(cart_id) 
+      const cartItems = await this.service.getAll(cart_id) 
       return cartItems
     } catch (error) {
       return error

@@ -9,6 +9,7 @@ const controller = ControllerFactory.MakeOrderController()
 
 
 orderRouter.get('/getall',verifyToken,async (req,res) =>{
+  
   const user_id = await UtilitiesFactory.MakeTokenManipulator().getUserByToken(req.headers.authorization);
   
   const response = await controller.getByUserId(user_id)

@@ -24,19 +24,6 @@ export class ProductController implements IProductControllerProtocol{
     
   }
 
-  async getProductById(req: Request, res: Response): Promise<Response> {
-    const {id} = req.body
-    try {
-      const product = await this.repository.getProductById(id) 
-      return res.status(201).json({product})
-    } catch (error) {
-      if(error instanceof HttpException){
-       return res.status(error.statusCode).json({message:error.message})
-      }
-      return res.status(501).json({message:'systemError'})
-    }
-  
-  }
 
   async addProduct({productData,product_owner}:AddProductAttributes): Promise<AddProductResponseBody > {
     try {
@@ -66,9 +53,8 @@ export class ProductController implements IProductControllerProtocol{
   async updateProductData(data:UpdateProductAttributes) {
     
     try {
-      const {message,product} = await this.service.update(data) //acho melçhor a mensageria ficar por conta do controller
-      
-      return {message,product}
+      const response = await this.service.update(data) //acho melçhor a mensageria ficar por conta do controller
+      return response
     } catch (error) {
       return error
       
