@@ -7,13 +7,14 @@ export class ProductRepository implements IProductRepositoryProtocol{
   
   async deleteProduct(id: number): Promise<void> {
     try {
-      await prismaClient.product.delete({
+      const deleted = await prismaClient.product.delete({
         where:{
           id:id
         }
       })
+    
     } catch (error) {
-      throw new HttpException(`system error ${error.message}`,501)
+      throw new HttpException(`ocorreu um erro ao tentar realizar essa operação, tente novamente mais tarde`,500)
     }
   }
 
@@ -55,13 +56,10 @@ export class ProductRepository implements IProductRepositoryProtocol{
           id:productId
         }
       })
-      if(!product) throw new HttpException('Not Found',404)
+      
       return product
     } catch (error) {
-      if(error instanceof HttpException){
-        throw new HttpException(error.message,error.statusCode)
-      } 
-      throw new HttpException('System Error',501)
+      throw new Error('ocorreu algo errado ao tentar buscar o produto')
     }
   }
 
@@ -77,7 +75,7 @@ export class ProductRepository implements IProductRepositoryProtocol{
     }
   }
 
-  async updateProduct(id: number,data:ProductAttributes): Promise<void> {
+  async updateProduct(id: number,data:ProductAttributes): Promise<ProductAttributes> {
     try {
       const product = await prismaClient.product.update({
         data:data,
@@ -86,6 +84,7 @@ export class ProductRepository implements IProductRepositoryProtocol{
         }
       })
       if(!product) throw new HttpException('Erro ao atualizar o produto',404)
+      return product
     } catch (error) {
       if(error instanceof HttpException){
         throw new HttpException(error.message,error.statusCode)

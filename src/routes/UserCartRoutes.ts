@@ -2,12 +2,13 @@ import { Router } from "express";
 import { UtilitiesFactory } from "../factories/UtilitiesFactory";
 import { ControllerFactory } from "../factories/ControllerFactory";
 import { ErrorHandler } from "../exceptions/ErrorHandler";
+import { verifyToken } from "../middlewares/VerifyToken";
 
 const controller = ControllerFactory.MakeUserCartController()
 const router = Router()
 //verify token in ever request
 
-router.get('/',async (req,res) =>{
+router.get('/',verifyToken,async (req,res) =>{
   //fechar carrinho e emitir ordem 
   try {
     const tokenManager = UtilitiesFactory.MakeTokenManipulator()
@@ -25,9 +26,9 @@ router.get('/',async (req,res) =>{
     return res.status(500).json({message:'erro no get allusercarts mid'})
   }
   
- })
+ },ErrorHandler)
 
-router.post('/create',async (req,res,next) =>{
+router.post('/create',verifyToken,async (req,res,next) =>{
   //get user id by token
   const token = req.headers.authorization
   const userId = await UtilitiesFactory.MakeTokenManipulator().getUserByToken(token)

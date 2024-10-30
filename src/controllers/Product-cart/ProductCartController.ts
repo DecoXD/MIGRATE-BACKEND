@@ -51,7 +51,7 @@ export class ProductCartController implements IProductCartControllerProtocol{
       return cartItems
     } catch (error) {
       return error
-      console.log(error,'controller getAll')
+     
     }
   }
 }

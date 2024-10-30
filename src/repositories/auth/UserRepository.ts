@@ -3,7 +3,7 @@
 /*eslint disable */
 import { prismaClient } from "../../config/dbConfig";
 import { HttpException } from "../../exceptions/HttpException";
-import { IUserAttributes, IUserRegisterAttributes } from "../../interfaces/auth";
+import { IAdminRegisterAttributes, IUserAttributes, IUserRegisterAttributes } from "../../interfaces/auth";
 
 import { IUserRepositoryProtocol } from "./IUserRepository";
 import bcrypt from 'bcrypt';
@@ -35,16 +35,43 @@ export class UserRepository implements IUserRepositoryProtocol {
         data:newUser
       })
       if(!user){
+        throw new Error()
+      }
+      return user
+    } catch (error) {
+      throw new Error("ocorreu um erro ao tentar criar sua conta admin")
+    }
+  
+  
+  }
+
+  async registerAdmin(adminData:IAdminRegisterAttributes){
+    try {
+      const {name,email,password,role} = adminData
+     
+      const salt = bcrypt.genSaltSync(12)
+      const hashPassword = bcrypt.hashSync(password,salt)// refatorar 
+     
+      const newUser = {
+        name,
+        email,
+        password:hashPassword,
+        role
+        
+      }
+
+      const user = await prismaClient.user.create({
+        data:newUser
+      })
+      if(!user){
         throw new HttpException('unknown error',500)
       }
       return user
     } catch (error) {
       throw new Error("ocorreu um erro ao tentar criar sua conta")
     }
-  
-  
+    
   }
-
   async getUserById(id:string):Promise<IUserAttributes >{
    
     const user = await  prismaClient.user.findUnique({ where:{

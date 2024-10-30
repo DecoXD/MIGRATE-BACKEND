@@ -1,4 +1,12 @@
-import { IProductControllerProtocol, IUserAuthControllerProtocol, ProductController, UserController } from "../controllers"
+import { TokenManipulator } from "../utilities/Token"
+import { CreateUserService } from "../services/auth/UserAuthService" 
+import { UserCartService } from "../services/cart/CartService"
+import { OrderVerificator } from "../services/order/OrderVerificator"
+import { ProductService } from "../services/product/ProductService.ts"
+import { IProductControllerProtocol, 
+  IUserAuthControllerProtocol, 
+  ProductController, 
+  UserController } from "../controllers"
 import { IUserCartControllerProtocol } from "../controllers/cart/IUserCartControler"
 import { UserCartController } from "../controllers/cart/UserCartController"
 import { IOrderControllerProtocol } from "../controllers/Order/IOrderController"
@@ -10,38 +18,33 @@ import { OrderRepository } from "../repositories/order/OrderRepository"
 import { ProductCartRepository } from "../repositories/product-cart/ProductCartRepository"
 import { ProductRepository } from "../repositories/product/ProductRepository"
 import { UserCartRepository } from "../repositories/user-cart/UserCartRepository"
-import { TokenManipulator } from "../utilities/Token"
-import { CreateUserVerificator } from "../utilities/verificators/auth/UserAuthVerificator"
-import { UserCartVerificator } from "../utilities/verificators/cart/CartVerificator"
-import { OrderVerificator } from "../utilities/verificators/order/OrderVerificator"
-import { ProductVerificator } from "../utilities/verificators/product/ProductVerificator.ts"
 import { UtilitiesFactory } from "./UtilitiesFactory"
 
 
 export class ControllerFactory{
 
   static MakeUserAuthController():IUserAuthControllerProtocol{
-    const userService = new UserRepository()
-    const userVerificator = new CreateUserVerificator(userService)
+    const userRepository = new UserRepository()
     const tokenManipulator = new TokenManipulator()
-    const userController = new UserController(userService,userVerificator,tokenManipulator)
+    const userVerificator = new CreateUserService(userRepository,tokenManipulator)
+    const userController = new UserController(userRepository,userVerificator,tokenManipulator)
     
     return userController
   }
 
   static MakeProductController():IProductControllerProtocol{
-    const service = new ProductRepository()
+    const repository = new ProductRepository()
     const userService = new UserRepository()
     const tokenManipulator =  new TokenManipulator()
-    const verificator = new ProductVerificator(service,userService,tokenManipulator)
-    const controller = new ProductController(service,verificator)
+    const service = new ProductService(repository,userService,tokenManipulator)
+    const controller = new ProductController(repository,service)
 
   return controller
   }
 
   static MakeUserCartController():IUserCartControllerProtocol {
     const repository = new UserCartRepository()
-    const verificator = new UserCartVerificator(repository)
+    const verificator = new UserCartService(repository)
     const tokenManipulator = UtilitiesFactory.MakeTokenManipulator()
 
     return new UserCartController(repository,verificator,tokenManipulator)

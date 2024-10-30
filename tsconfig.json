@@ -10,7 +10,10 @@
     "outDir": "./dist",
     "sourceMap": true,
     "paths": {
-      "@interfaces/*":["./src/interfaces/*"]
+      "@utils/*":["./src/utilities/*"],
+      "@interfaces/*":["./src/interfaces/*"],
+      "@services/*":["./src/services/*"]
+
     }
     
     

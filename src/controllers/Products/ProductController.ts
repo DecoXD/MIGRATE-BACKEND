@@ -1,27 +1,27 @@
 import { Request, Response } from "express";
 import { IProductRepositoryProtocol } from "../../repositories/product/IProductRepository";
 import { IProductControllerProtocol } from "./IProductController";
-import { IProductVerificatorProtocol } from "../../utilities/verificators/product/IProductVerificatorProtocol";
+import { IProductServiceProtocol } from "@services/product/IProductServiceProtocol";
 import { HttpException } from "../../exceptions/HttpException";
-import { AddProductAttributes, ProductAttributes } from "@interfaces/product";
+import { AddProductAttributes, AddProductResponseBody, ManegementProductResponse, ProductAttributes, UpdateProductAttributes } from "@interfaces/product";
 
 
 export class ProductController implements IProductControllerProtocol{
   constructor(
     private repository:IProductRepositoryProtocol,
-    private verificator:IProductVerificatorProtocol,
+    private service:IProductServiceProtocol,
     ){
     
   }
 
   async getAllProducts():Promise<ProductAttributes[]>{
     try {
-      const productList = await this.repository.getAll()
+      const productList = await this.service.getAll()
       return productList
     } catch (error) {
       return error
     }
-    return  
+    
   }
 
   async getProductById(req: Request, res: Response): Promise<Response> {
@@ -38,16 +38,11 @@ export class ProductController implements IProductControllerProtocol{
   
   }
 
-  async addProduct({productData,product_owner}:AddProductAttributes): Promise<ProductAttributes> {
-
+  async addProduct({productData,product_owner}:AddProductAttributes): Promise<AddProductResponseBody > {
     try {
-      await this.verificator.addProductVerificator(productData)//% esquisito
-      Object.assign(productData,product_owner)
-
-      const product = await this.repository.saveProduct(productData)
-      
-     
-      return product
+      const {message,product} = await this.service.add({productData,product_owner})//% esquisito
+ 
+      return {message,product}
       
     } catch (error) {
       return error
@@ -56,34 +51,26 @@ export class ProductController implements IProductControllerProtocol{
   
   }
 
-  async deleteProduct(req: Request, res: Response): Promise<Response> {
+  async deleteProduct(productId:number,userId:string): Promise<ManegementProductResponse> {
     try {
-      const {id} = req.body
+      
    
-      // await this.verificator.deleteProductVerificator(req,id)
-      await this.repository.deleteProduct(id)
-      return res.status(201).json({message:'produto deletado com sucesso'})
+      // await this.service.deleteProductservice(req,id)
+      await this.service.deleteById(productId,userId)
+      return {message:'produto deletado com sucesso'}
     } catch (error) {
-      return res.status(500).json({message:error.message})
+      return error
     }
   }
 
-  async updateProductData(req: Request, res: Response): Promise<Response> {
-    const {id,name,description,discount,stock,category,price} = req.body
-    const data = {
-      name,
-      discount,
-      description,
-      stock,
-      category,
-      price
-    }
+  async updateProductData(data:UpdateProductAttributes) {
+    
     try {
-      // await this.verificator.addProductVerificator(req,data)
-      // await this.repository.updateProduct(id,data)
-      return res.status(201).json({message:'item atualizado com sucesso'})
+      const {message,product} = await this.service.update(data) //acho melçhor a mensageria ficar por conta do controller
+      
+      return {message,product}
     } catch (error) {
-      return res.status(500).json({message:error.message})
+      return error
       
     }
   }

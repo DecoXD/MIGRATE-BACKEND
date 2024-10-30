@@ -32,6 +32,7 @@ model Product {
   product_owner String
   owner         User          @relation(fields: [product_owner], references: [id], onDelete: Cascade)
   ProductCart   ProductCart[]
+
 }
 
 model Cart {

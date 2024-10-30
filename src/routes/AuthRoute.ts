@@ -7,7 +7,6 @@ import { ErrorHandler } from "../exceptions/ErrorHandler";
 import { UserRole } from "@prisma/client";
 
 const userController = ControllerFactory.MakeUserAuthController()
-
 const router = Router()
 
 router.get('/getuser',verifyToken,async (req,res) =>{

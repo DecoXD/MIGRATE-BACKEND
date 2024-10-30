@@ -2,12 +2,13 @@ import { Router } from "express";
 import { verifyToken } from "../middlewares/VerifyToken";
 import { UtilitiesFactory } from "../factories/UtilitiesFactory";
 import { ControllerFactory } from "../factories/ControllerFactory";
+import { ErrorHandler } from "../exceptions/ErrorHandler";
 
 const orderRouter = Router()
 const controller = ControllerFactory.MakeOrderController()
 
 
-orderRouter.get('/getall',async (req,res) =>{
+orderRouter.get('/getall',verifyToken,async (req,res) =>{
   const user_id = await UtilitiesFactory.MakeTokenManipulator().getUserByToken(req.headers.authorization);
   
   const response = await controller.getByUserId(user_id)
@@ -18,7 +19,7 @@ orderRouter.get('/getall',async (req,res) =>{
 
   return res.status(200).json({message:'ordens encontradas',response})
 
-})
+},ErrorHandler)
 
 orderRouter.post('/create',verifyToken,async (req,res) =>{
   const {cart_id} = req.body
@@ -32,7 +33,7 @@ orderRouter.post('/create',verifyToken,async (req,res) =>{
 
   return res.status(201).json({message:'seu pedido foi enviado com sucesso, aguarde a analise e entraremos em contato',response})
 
-})
+},ErrorHandler)
 
 
 export {orderRouter}

@@ -1,46 +1,39 @@
-import { Request, Response } from "express";
 import { IUserRepositoryProtocol } from "../../../repositories/auth/IUserRepository";
 import { HttpException } from "../../../exceptions/HttpException";
 import { IUserAuthControllerProtocol } from "./IUserController";
-import { ICreateUserVerificator } from "../../../utilities/verificators/auth/IUserAuthVerificator";
+import { ICreateUserService } from "../../../services/auth/IUserAuthService";
 import { ITokenManipulator } from "../../../utilities/interfaces";
-import { UserRole } from "@prisma/client";
-import { IAdminRegisterAttributes, ICreateUserResponse, IUserAttributes, IUserLoginAttributes, IUserLoginResponse, IUserRegisterAttributes } from "@interfaces/auth";
+import { IAdminRegisterAttributes, ICreateUserResponse, IRegisterResponseBody, IUserAttributes, IUserLoginAttributes, IUserLoginResponse, IUserRegisterAttributes } from "@interfaces/auth";
 
 
 export class UserController implements IUserAuthControllerProtocol{
   
-  constructor( private repository:IUserRepositoryProtocol, private verificator:ICreateUserVerificator,private tokenManipulator:ITokenManipulator){
+  constructor( private repository:IUserRepositoryProtocol, private service:ICreateUserService,private tokenManipulator:ITokenManipulator){
     
   }
   
-  async createUser(data:IUserRegisterAttributes): Promise<ICreateUserResponse> {
+  async createUser(data:IUserRegisterAttributes): Promise<IRegisterResponseBody> {
     //implements zod verification 
     
     try {
       //initialize register verification
-      
-      await this.verificator.startRegisterVerification(data)
-      const newUser = await this.repository.registerUser(data) // talvez deixar o hash para outra classe possa ser uma boa ideia
-      //create a token
-      const token = await this.tokenManipulator.createToken(newUser.id)
-      return {newUser,token}
+      const {message,token} = await this.service.register(data)
+     
+      return {message,token}
 
     } catch (error) {
       return error
     }
   }
 
-  async createAdminAccount(data:IAdminRegisterAttributes):Promise<ICreateUserResponse>{
+  async createAdminAccount(data:IAdminRegisterAttributes):Promise<IRegisterResponseBody>{
     
     try {
       //initialize register verification
-      
-      await this.verificator.startRegisterVerification(data)
-      const newUser = await this.repository.registerUser(data) // talvez deixar o hash para outra classe possa ser uma boa ideia
-      //create a token
-      const token = await this.tokenManipulator.createToken(newUser.id)
-      return {newUser,token}
+
+      const { message,token}=await this.service.registerAdmin(data)
+    
+      return {message,token}
 
     } catch (error) {
       return error
@@ -50,7 +43,7 @@ export class UserController implements IUserAuthControllerProtocol{
   async toAccessUser(data:IUserLoginAttributes):Promise<IUserLoginResponse> {
    
     try {
-      await this.verificator.startLoginVerification(data)     
+      await this.service.login(data)     
       const user = await this.repository.getUserByEmail(data.email)
       
       const token = await this.tokenManipulator.createToken(user.id)

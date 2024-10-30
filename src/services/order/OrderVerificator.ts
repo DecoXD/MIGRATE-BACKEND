@@ -1,5 +1,5 @@
-import { HttpException } from "../../../exceptions/HttpException";
-import { IUserCartRepositoryProtocol } from "../../../repositories/user-cart/IUserCartRepository";
+import { HttpException } from "../../exceptions/HttpException"; 
+import { IUserCartRepositoryProtocol } from "../../repositories/user-cart/IUserCartRepository"; 
 import { IOrderVerificator } from "./IOrderVerificator";
 
 export class OrderVerificator implements IOrderVerificator {

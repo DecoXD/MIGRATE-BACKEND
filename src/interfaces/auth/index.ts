@@ -34,7 +34,14 @@ export type IUserLoginAttributes = {
 }
 
 
+//responses 
 export type IUserLoginResponse = {
   token:string,
   message:string
 }
+
+export type IRegisterResponseBody = {
+  message:string,
+  token:string
+}
+
