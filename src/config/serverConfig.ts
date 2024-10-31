@@ -4,7 +4,7 @@ import { ProductAdminRouter } from "../routes/admin/ProductRoute.admin";
 import { router as UserCartRouter} from "../routes/UserCartRoutes";
 import { ProductCartRouter } from "../routes/ProductCartRoutes";
 import { orderRouter } from "../routes/OrderRoutes";
-
+import { ProductRouter } from "../routes/ProductRoutes";
 
 export class ServerSetup {
     private server:Express 
@@ -23,7 +23,8 @@ export class ServerSetup {
             extended:true
         }))
         this.server.use('/',AuthRouter)
-        this.server.use('/p',ProductAdminRouter)
+        this.server.use('/p',ProductRouter)
+        this.server.use('/admin/p',ProductAdminRouter)
         this.server.use('/cart',UserCartRouter)
         this.server.use('/productcart',ProductCartRouter)
         this.server.use('/order',orderRouter)

@@ -3,7 +3,6 @@ import { CreateUserService } from "../services/auth/UserAuthService"
 import { UserCartService } from "../services/cart/CartService"
 import { OrderService } from "../services/order/OrderService"
 import { ProductService } from "../services/product/ProductService"
-
 import { IProductControllerProtocol, 
   IUserAuthControllerProtocol, 
   ProductController, 
@@ -39,7 +38,7 @@ export class ControllerFactory{
     const userService = new UserRepository()
     const tokenManipulator =  new TokenManipulator()
     const service = new ProductService(repository,userService,tokenManipulator)
-    const controller = new ProductController(repository,service)
+    const controller = new ProductController(service)
 
   return controller
   }
@@ -53,7 +52,10 @@ export class ControllerFactory{
   static MakeProductCartController():IProductCartControllerProtocol {
     const productRepository = new ProductRepository
     const repository = new ProductCartRepository()
-    const service = new ProductCartService(productRepository,repository)
+    const userRepository = new UserRepository()
+    const tokenManipulator = new TokenManipulator
+    const userService = new CreateUserService(userRepository,tokenManipulator)
+    const service = new ProductCartService(productRepository,repository,userService)
 
     return new ProductCartController(service)
 }

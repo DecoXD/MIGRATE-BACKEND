@@ -8,7 +8,7 @@ import { AddProductAttributes, AddProductResponseBody, ManegementProductResponse
 
 export class ProductController implements IProductControllerProtocol{
   constructor(
-    private repository:IProductRepositoryProtocol,
+ 
     private service:IProductServiceProtocol,
     ){
     
@@ -57,6 +57,15 @@ export class ProductController implements IProductControllerProtocol{
       return response
     } catch (error) {
       return error
+      
+    }
+  }
+
+  async getProductById(productId: number): Promise<ProductAttributes> {
+    try {
+      const response = await this.service.getProductById(productId)
+      return response
+    } catch (error) {
       
     }
   }

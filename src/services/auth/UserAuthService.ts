@@ -107,5 +107,16 @@ export class CreateUserService implements ICreateUserService{
       }
     }
 }
+
+  async getById(user_id:string):Promise<IUserAttributes>{
+    try {
+      const user = await this.repository.getUserById(user_id)
+      if(!user) throw new HttpException('usuário não encontrado',404)
+      return user
+
+    } catch (error) {
+      return error
+    }
+  }
  
 }

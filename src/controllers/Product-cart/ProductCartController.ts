@@ -4,6 +4,7 @@ import { IProductCartRepositoryProtocol } from "../../repositories/product-cart/
 import { IProductRepositoryProtocol } from "../../repositories/product/IProductRepository";
 import { IUserCartRepositoryProtocol } from "../../repositories/user-cart/IUserCartRepository";
 import { IProductCartControllerProtocol } from "./IProductCartController";
+import { DeleteProductToCartResponse } from "@interfaces/product-cart";
 
 
 export class ProductCartController implements IProductCartControllerProtocol{
@@ -25,8 +26,13 @@ export class ProductCartController implements IProductCartControllerProtocol{
    }
   }
 
-  async delete(productId: number): Promise<void> {
-    
+  async delete(user_id:string,productId: number,cart_id:number): Promise<DeleteProductToCartResponse  > {
+    try {
+      const response = await this.service.delete({user_id,product_id:productId,cart_id})
+      return response
+    } catch (error) {
+      return error
+    }
   }
 
   async bundling(data: { cartId: number; user_id: string; total: number; }): Promise<void> {

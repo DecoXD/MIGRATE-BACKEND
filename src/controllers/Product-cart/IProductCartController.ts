@@ -1,3 +1,5 @@
+import { DeleteProductToCartResponse } from "@interfaces/product-cart"
+
 type ProductCartManagerProps = {
   product_id:number
   cart_id:number
@@ -12,7 +14,7 @@ type BundlingProps = {
 
 export type IProductCartControllerProtocol = {
   add(data:ProductCartManagerProps)
-  delete(productId:number):Promise<void>
+  delete(user_id:string,productId:number,cart_id:number):Promise<DeleteProductToCartResponse>
   bundling(data:BundlingProps):Promise<void>
   getAll(cart_id:number)
 

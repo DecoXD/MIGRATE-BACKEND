@@ -92,4 +92,14 @@ export class ProductService implements IProductServiceProtocol{
       return error
     }
   }
+
+  async getProductById(productId:number):Promise<ProductAttributes>{
+    try {
+      const product = await this.repository.getProductById(productId)
+      if(!product) throw new HttpException('Conteúdo não encontrado',404)
+      return product
+    } catch (error) {
+      return error
+    }
+  }
 }

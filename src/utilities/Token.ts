@@ -54,6 +54,7 @@ export class TokenManipulator implements ITokenManipulator{
       return decodedToken.id
     } catch (error) {
       console.log('erro no getuserbytoken')
+      throw error
       
     }
   }

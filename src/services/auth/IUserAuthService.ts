@@ -6,4 +6,5 @@ export type ICreateUserService = {
   login(user:IUserLoginAttributes):Promise<void>
   register(user:IUserRegisterAttributes):Promise<IRegisterResponseBody>
   registerAdmin(user:IUserRegisterAttributes):Promise<IRegisterResponseBody>
+  getById(user_id:string):Promise<IUserAttributes>
 }

@@ -18,8 +18,19 @@ export class ProductCartRepository implements IProductCartRepositoryProtocol {
    }
   }
 
-  async remove(productId: number): Promise<void> {
-    
+  async remove(productId: number,cart_id:number): Promise<void> {
+    try {
+      const deletedProduct = await prismaClient.productCart.delete({where:{
+        cart_id_product_id:{
+          cart_id,
+          product_id:productId
+        }
+        
+      }})
+      if(!deletedProduct) throw new Error('Algo de errado aconteceu.')
+    } catch (error) {
+      return error
+    }
   }
 
 
