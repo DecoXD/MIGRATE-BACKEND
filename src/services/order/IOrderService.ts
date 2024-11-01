@@ -1,4 +1,4 @@
-import { CreateOrderAttributes, CreateOrderResponseBody, OrderAttributes } from "@interfaces/order"
+import {  CreateOrderResponseBody, OrderAttributes } from "@interfaces/order"
 
 export type IOrderService = {
  createOrder(data:{cart_id: number, user_id: string}):Promise<CreateOrderResponseBody>

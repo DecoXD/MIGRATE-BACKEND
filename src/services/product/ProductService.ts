@@ -1,4 +1,4 @@
-import { Request } from "express";
+
 import { HttpException } from "../../exceptions/HttpException";
 import { AddProductAttributes, AddProductResponseBody, DeleteProductResponseBody, ProductAttributes, UpdatedProductResponseBody, UpdateProductAttributes } from "@interfaces/product"; 
 import { IUserRepositoryProtocol } from "../../repositories/auth/IUserRepository"; 
@@ -6,8 +6,7 @@ import { IProductRepositoryProtocol } from "../../repositories/product/IProductR
 import { ITokenManipulator } from "../../utilities/interfaces"; 
 import { IProductServiceProtocol } from "./IProductServiceProtocol";
 import { allFieldsAreFilled } from "../../utilities/checkFields";
-import { prismaClient } from "../../config/dbConfig";
-import { UserRole } from "@prisma/client";
+
 
 export class ProductService implements IProductServiceProtocol{
 

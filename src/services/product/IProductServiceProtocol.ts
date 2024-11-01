@@ -1,4 +1,4 @@
-import { Request } from "express";
+
 import { AddProductAttributes, AddProductResponseBody, DeleteProductResponseBody, ProductAttributes, UpdatedProductResponseBody, UpdateProductAttributes } from "@interfaces/product"; 
 
 export type IProductServiceProtocol = {

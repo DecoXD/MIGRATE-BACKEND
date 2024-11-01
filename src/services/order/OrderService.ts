@@ -1,4 +1,4 @@
-import { CreateOrderAttributes, CreateOrderResponseBody, OrderAttributes } from "@interfaces/order";
+import {  CreateOrderResponseBody, OrderAttributes } from "@interfaces/order";
 import { HttpException } from "../../exceptions/HttpException"; 
 import { IOrderRepositoryProtocol } from "../../repositories/order/IOrderRepository";
 import { IProductCartRepositoryProtocol } from "../../repositories/product-cart/IProductCartRepository";

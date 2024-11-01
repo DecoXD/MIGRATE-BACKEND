@@ -1,4 +1,4 @@
-import { ProductCartAttributes } from "@interfaces/product-cart";
+import { DeleteProductToCartResponse, ProductCartAttributes } from "@interfaces/product-cart";
 import { prismaClient } from "../../config/dbConfig";
 import { IProductCartRepositoryProtocol } from "./IProductCartRepository";
 
@@ -18,7 +18,7 @@ export class ProductCartRepository implements IProductCartRepositoryProtocol {
    }
   }
 
-  async remove(productId: number,cart_id:number): Promise<void> {
+  async remove(productId: number,cart_id:number): Promise<DeleteProductToCartResponse> {
     try {
       const deletedProduct = await prismaClient.productCart.delete({where:{
         cart_id_product_id:{

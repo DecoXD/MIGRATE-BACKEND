@@ -1,4 +1,3 @@
-import { AddProductResponseBody } from "@interfaces/product"
 import { AddProductInCartResponseBody, DeleteProductToCartResponse, DeleteProductToProductCart, ProductCartAttributes } from "@interfaces/product-cart"
 
 export type IProductCartServiceProtocol = {

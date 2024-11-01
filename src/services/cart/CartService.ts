@@ -1,6 +1,4 @@
-
 import { ICartServiceProtocol as IUserCartVerificatorProtocol } from "./ICartService";
-import { IUserRepositoryProtocol } from "../../repositories/auth/IUserRepository"; 
 import { IUserCartRepositoryProtocol } from "../../repositories/user-cart/IUserCartRepository"; 
 import { HttpException } from "../../exceptions/HttpException"; 
 import { IUserCartAttributes } from "@interfaces/cart/ICartAttributes";

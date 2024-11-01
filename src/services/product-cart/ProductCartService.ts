@@ -1,4 +1,4 @@
-import { AddProductResponseBody } from "@interfaces/product";
+
 import { IProductCartRepositoryProtocol } from "../../repositories/product-cart/IProductCartRepository";
 import { IProductRepositoryProtocol } from "../../repositories/product/IProductRepository";
 import { IProductCartServiceProtocol } from "./IProductCartService";

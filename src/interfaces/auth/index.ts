@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { User, UserRole } from "@prisma/client";
-import { Request, Response } from "express";
+import { UserRole } from "@prisma/client";
+
 
 export type IUserAttributes = {
   name:string,

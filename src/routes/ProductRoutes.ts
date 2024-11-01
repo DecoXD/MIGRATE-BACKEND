@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { ControllerFactory } from "../factories/ControllerFactory";
-import { VerifyUserPermissions } from "../middlewares/VerifyUserPermissions";
 import { UtilitiesFactory } from "../factories/UtilitiesFactory";
 import { HttpException } from "../exceptions/HttpException";
 import { ErrorHandler } from "../exceptions/ErrorHandler";
