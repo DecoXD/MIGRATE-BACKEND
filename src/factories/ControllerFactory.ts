@@ -18,7 +18,7 @@ import { OrderRepository } from "../repositories/order/OrderRepository"
 import { ProductCartRepository } from "../repositories/product-cart/ProductCartRepository"
 import { ProductRepository } from "../repositories/product/ProductRepository"
 import { UserCartRepository } from "../repositories/user-cart/UserCartRepository"
-import { UtilitiesFactory } from "./UtilitiesFactory"
+
 import { ProductCartService } from "../services/product-cart/ProductCartService"
 
 

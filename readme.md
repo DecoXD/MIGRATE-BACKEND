@@ -22,7 +22,7 @@ Esta API MIGRATE permite que usuários se cadastrem, façam login, adicionem pro
 
 - **Gerenciamento de Produtos**: Criar, atualizar, remover e listar produtos.
 - **Gerenciamento de Usuários**: Visualizar e editar detalhes dos usuários cadastrados.
-- **Gerenciamento de Ordens**: Receber e acompanhar o status de todas as ordens emitidas pelos usuários.
+- **Gerenciamento de Ordens**: Receber,acompanhar e alterar o status de todas as ordens emitidas pelos usuários.
 - **Envio de notificações**: Enviar notificações aos usuários sobre o status das compras e atualizações de produtos.
 
 ---
@@ -32,9 +32,9 @@ Esta API MIGRATE permite que usuários se cadastrem, façam login, adicionem pro
 - Apenas **usuários autenticados** podem adicionar produtos ao carrinho e realizar compras.
 - **Usuários não autenticados** podem visualizar e buscar produtos.
 - Apenas **administradores** podem gerenciar produtos, usuários e ordens.
-- Ao fechar uma compra, o status do carrinho é alterado para "fechado" e um novo carrinho com status "ativo" é criado automaticamente.
+- Ao fechar uma compra, o status do carrinho é alterado para "fechado" e um novo carrinho com status "ativo" é criado automaticamente quando o usuário decide adicionar um produto ao carrinho.
 - O carrinho não pode ser modificado após a emissão de uma ordem.
-
+- As rotas de criação de um usuário com privilégios de administrador só podem ser consumidas com o token de administrador,
 ---
 
 ## Requisitos Não Funcionais
@@ -50,27 +50,27 @@ Esta API MIGRATE permite que usuários se cadastrem, façam login, adicionem pro
 
 ### Usuários
 
-- **POST /users/createaccount** - Cadastro de novos usuários
-- **POST /users/createadminaccount** - Login de usuários
-- **POST /users/signin** - Logout de usuários
-- **GET /users/orders** - Visualizar todas as ordens do usuário autenticado
+- **POST /api/users/createaccount** - Cadastro de novos usuários
+- **POST /api/users/createadminaccount** - Login de usuários
+- **POST /api/users/signin** - Logout de usuários
+- **GET /api/users/orders** - Visualizar todas as ordens do usuário autenticado
 
 ### Produtos
+- **GET /api/p/** - Listar todos os produtos 
+- **POST /api/admin/p/create** - Criar um novo produto (requer permissões de administrador)
+- **PUT /api/admin/p/update** - Atualizar dados de um produto específico (requer permissões de administrador)
+- **DELETE /api/admin/p/delete** - Remover um produto específico (requer permissões de administrador)
 
-- **GET /p/** - Listar todos os produtos
-- **GET /p/:id** - Buscar detalhes de um produto específico
-- **POST /cart** - Adicionar produto ao carrinho
-- **POST /orders** - Emitir ordem de compra
-
-### Administradores
-
-- **POST /admin/products** - Criar novo produto
-- **PUT /admin/products/:id** - Atualizar detalhes de um produto
-- **DELETE /admin/products/:id** - Remover produto
-- **GET /admin/orders** - Visualizar todas as ordens emitidas
-- **POST /admin/notifications** - Enviar notificações para os usuários
+### Carrinho de Produtos
+- **GET /api/productcart/** - Obter todos os produtos do carrinho específico (requer token de autenticação)
+- **POST /api/productcart/add** - Adicionar produto ao carrinho do usuário (requer token de autenticação)
+- **DELETE /api/productcart/delete** - Remover produto do carrinho do usuário autenticado
 
 ---
+
+### Ordem de compras
+- **GET /api/order/** - Obter Todos os produtos do carrinho especifico 
+- **POST /api/order/create** - Criar uma nova ordem de pedido (necessário estar autenticado)
 
 ## Tecnologias Utilizadas
 
@@ -85,9 +85,9 @@ Esta API MIGRATE permite que usuários se cadastrem, façam login, adicionem pro
 
 ## Próximas Funcionalidades
 
-- **Cálculo de prazo de entrega**: Permitir que os usuários calculem o prazo de entrega com base em sua localização e o serviço de entrega selecionado.
 - **Integração com serviços de pagamento**: Implementar integração com gateways de pagamento.
-
+- **Caching**: Implementar sistema de cache .
+- **Monitoramento de acesso** - Implementar sistema de monitoramento de clicks e acesso.
 ---
 
 ## Instalação e Uso
@@ -95,3 +95,6 @@ Esta API MIGRATE permite que usuários se cadastrem, façam login, adicionem pro
 1. Clone o repositório:
    ```bash
    git clone <https://github.com/DecoXD/MIGRATE-BACKEND>
+2. npm install
+
+3. npm start

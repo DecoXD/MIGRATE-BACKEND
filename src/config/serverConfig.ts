@@ -22,12 +22,12 @@ export class ServerSetup {
         this.server.use(express.urlencoded({
             extended:true
         }))
-        this.server.use('/',AuthRouter)
-        this.server.use('/p',ProductRouter)
-        this.server.use('/admin/p',ProductAdminRouter)
-        this.server.use('/cart',UserCartRouter)
-        this.server.use('/productcart',ProductCartRouter)
-        this.server.use('/order',orderRouter)
+        this.server.use('/api/',AuthRouter)
+        this.server.use('/api/p',ProductRouter)
+        this.server.use('/api/admin/p',ProductAdminRouter)
+        this.server.use('/api/cart',UserCartRouter)
+        this.server.use('/api/productcart',ProductCartRouter)
+        this.server.use('/api/order',orderRouter)
         this.server.listen(3000,() => {
             console.log('server are ready')
         })

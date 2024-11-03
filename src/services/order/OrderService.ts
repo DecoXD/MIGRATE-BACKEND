@@ -15,14 +15,14 @@ export class OrderService implements IOrderService {
   }
     //criar a ordem com o usuário, o id do carrinho e o valor total
  async createOrder(data:{cart_id: number, user_id: string}): Promise<CreateOrderResponseBody> {
-    ///verificar se o carrinho está ativo 
+    ///verificar se o carrinho está ativo e se pertence ao usuário que o está fechando
     try {
       const activeCart = await this.userCartRepository.getActiveCartByUserId(data.user_id)
      
       const valid = activeCart.status === "ACTIVE" && data.cart_id === activeCart.id
       if(!valid) throw new HttpException('infelizmente nao foi possivel realizar essa operação',404)
 
-        const productList = await this.productCartRepository.getByCartId(data.cart_id)
+      const productList = await this.productCartRepository.getByCartId(data.cart_id)
       
       const total = productList.reduce((total,productList) =>{
         return total + productList.price
