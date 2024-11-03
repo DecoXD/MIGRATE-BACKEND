@@ -97,9 +97,9 @@ Esta API MIGRATE permite que usuários se cadastrem, façam login, adicionem pro
    git clone <https://github.com/DecoXD/MIGRATE-BACKEND>
 
 2. Instale as dependências:
-  ```bash
+
   npm install
 
 3. inicie o servidor:
-  ```bash
+
   npm start
