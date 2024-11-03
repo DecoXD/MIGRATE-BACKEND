@@ -10,7 +10,7 @@ export async function VerifyUserPermissions(req:Request,res:Response,next:NextFu
   try {
     const token = req.headers.authorization
     const userId = await UtilitiesFactory.MakeTokenManipulator().getUserByToken(token)
-    const user = await RepositoryFactory.createUserRepository().getUserById(userId)
+    const user = await RepositoryFactory.MakeUserRepository().getUserById(userId)
     if(user.role !== "ADMIN") return res.status(401).json({message: 'STOP! Access Not Authorized'})
     next()
   } catch (error) {

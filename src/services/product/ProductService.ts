@@ -6,14 +6,15 @@ import { IProductRepositoryProtocol } from "../../repositories/product/IProductR
 import { ITokenManipulator } from "../../utilities/interfaces"; 
 import { IProductServiceProtocol } from "./IProductServiceProtocol";
 import { allFieldsAreFilled } from "../../utilities/checkFields";
+import { ICreateUserService } from "@services/auth/IUserAuthService";
 
 
 export class ProductService implements IProductServiceProtocol{
 
   constructor(
     private repository:IProductRepositoryProtocol,
-    private userService:IUserRepositoryProtocol,
-    private tokenManipulator:ITokenManipulator){
+    private userService:ICreateUserService,
+    ){
 
   }
 
