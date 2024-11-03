@@ -95,6 +95,11 @@ Esta API MIGRATE permite que usuários se cadastrem, façam login, adicionem pro
 1. Clone o repositório:
    ```bash
    git clone <https://github.com/DecoXD/MIGRATE-BACKEND>
-2. npm install
 
-3. npm start
+2. 
+  ```bash
+  npm install
+
+3. 
+  ```bash
+  npm start
