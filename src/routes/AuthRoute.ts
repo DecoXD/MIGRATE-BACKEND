@@ -19,6 +19,7 @@ router.get('/getuser',verifyToken,async (req,res) =>{
   if(response instanceof Error){
     return res.status(500).json({message:"erro no get user"})
   }
+  
 
   return res.status(200).json({message:"usuário encontrado !",user:response})
 },ErrorHandler)
@@ -31,10 +32,12 @@ router.post('/createaccount',async (req:Request,res:Response,next:NextFunction) 
       password, 
     }
   const response = await userController.createUser(data)
-
+    
   if(response instanceof Error){
     return next(response)
   }
+
+ 
   return res.status(201).json(response)
 
 },ErrorHandler)
@@ -52,6 +55,13 @@ router.post('/createadminaccount',verifyAdminKey,async (req:Request,res:Response
   if(response instanceof Error){
     return next(response)
   }
+   //Configure HttpOnly cookie
+  //  res.cookie('token',response.token,{
+  //   httpOnly:true,
+  //   secure:process.env.NODE_END === "production",
+  //   sameSite:"strict"
+  // })
+
   return res.status(201).json(response)
 
 },ErrorHandler)
@@ -66,7 +76,9 @@ router.post('/signin',async (req:Request,res:Response,next:NextFunction) =>{
   if(response instanceof Error){
     return next(response)
   }
-  res.status(200).json(response)
+  
+
+  return res.status(200).json(response)
 
 },ErrorHandler)
 

@@ -11,7 +11,10 @@ const tokenManipulator = UtilitiesFactory.MakeTokenManipulator()
 
 // only admin can be access this methods 
 ProductAdminRouter.get('/',async(req,res,next) =>{
+  console.time('getall')
   const response = await controller.getAllProducts()
+  console.timeEnd('getall')
+   
   if(response instanceof Error) {
     return next(response)
   }

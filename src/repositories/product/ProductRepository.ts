@@ -28,7 +28,7 @@ export class ProductRepository implements IProductRepositoryProtocol{
       if(error instanceof HttpException){
         throw new HttpException(error.message,error.statusCode)
       }
-      throw new HttpException('Server Error',500)
+      throw new HttpException(error.message,500)
     }
   }
 

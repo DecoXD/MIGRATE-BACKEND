@@ -1,5 +1,5 @@
 {
-    "compilerOptions": {
+  "compilerOptions": {
     "target": "ES2020",
     "module": "CommonJS",
     "noImplicitAny": false,
@@ -10,15 +10,11 @@
     "outDir": "./dist",
     "sourceMap": true,
     "paths": {
-      "@utils/*":["./src/utilities/*"],
-      "@interfaces/*":["./src/interfaces/*"],
-      "@services/*":["./src/services/*"]
-
+      "@utils/*": ["./src/utilities/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
+      "@services/*": ["./src/services/*"]
     }
-    
-    
-    },
-      "include": ["src/**/*"],
-      
-      "exclude": ["**/*.spec.ts","node_modules"]
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["**/*.spec.ts", "node_modules"]
+}

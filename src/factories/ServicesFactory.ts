@@ -1,18 +1,18 @@
+import { OrderService } from "@services/order/OrderService";
+import { ProductService } from "@services/product/ProductService";
+import { IProductCartServiceProtocol } from "@services/product-cart/IProductCartService";
 import { CreateUserService } from "@services/auth/UserAuthService";
+import { ICartServiceProtocol } from "@services/cart/ICartService";
+import { ProductCartService } from "@services/product-cart/ProductCartService";
+import { IOrderService } from "@services/order/IOrderService";
+import { UserCartService } from "@services/cart/CartService";
+import { ICreateUserService } from "@services/auth/IUserAuthService";
 import { RepositoryFactory } from "./RepositoryFactory";
 import { UtilitiesFactory } from "./UtilitiesFactory";
-import { ICartServiceProtocol } from "@services/cart/ICartService";
-import { UserCartService } from "@services/cart/CartService";
-import { IProductCartServiceProtocol } from "@services/product-cart/IProductCartService";
-import { ProductCartService } from "@services/product-cart/ProductCartService";
-import { ICreateUserService } from "@services/auth/IUserAuthService";
 import { IProductServiceProtocol } from "@services/product/IProductServiceProtocol";
-import { ProductService } from "@services/product/ProductService";
-import { IOrderService } from "@services/order/IOrderService";
-import { OrderService } from "@services/order/OrderService";
 
 
-export class ServicesFactory {
+export class ServicesFactory { 
 
 
   static MakeUserService():ICreateUserService{

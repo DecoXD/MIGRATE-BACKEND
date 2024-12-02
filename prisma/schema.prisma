@@ -26,7 +26,8 @@ model Product {
   description   String
   price         Float
   stock         Int
-  category      String
+  category      String 
+  image         String
   discount      Int?          @default(0)
   created_at    DateTime      @default(now())
   product_owner String
