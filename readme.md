@@ -4,7 +4,9 @@
 
 Esta API MIGRATE permite que usuários se cadastrem, façam login, adicionem produtos ao carrinho, emitam ordens de compra e acompanhem suas compras. Administradores têm permissão para gerenciar produtos e usuários, além de acompanhar as ordens emitidas e enviar notificações sobre o status de compras.
 
----
+## API ARCHITECTURE
+---![Captura de tela_25-12-2024_212122_app diagrams net](https://github.com/user-attachments/assets/d339c565-bb5a-426b-963b-323cdc6088ab)
+
 
 ## Funcionalidades
 
